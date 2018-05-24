@@ -1,1 +1,0 @@
-a tua mae de 4

@@ -115,7 +115,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="listArrayList.c" />
+    <ClCompile Include="listElem.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="mapArrayList.c" />
+    <ClCompile Include="mapElem.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="list.h" />
+    <ClInclude Include="listElem.h" />
+    <ClInclude Include="map.h" />
+    <ClInclude Include="mapElem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

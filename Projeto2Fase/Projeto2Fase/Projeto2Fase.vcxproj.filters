@@ -18,5 +18,31 @@
     <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="listArrayList.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="listElem.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mapArrayList.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mapElem.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="list.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="listElem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mapElem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
