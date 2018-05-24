@@ -1,5 +1,7 @@
 #pragma once
 
-typedef int ListElem;
+#include "player.h"
+
+typedef Player ListElem;
 
 void listElemPrint(ListElem elem);

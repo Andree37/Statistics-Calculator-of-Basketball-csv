@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="date.c" />
     <ClCompile Include="listArrayList.c" />
     <ClCompile Include="listElem.c" />
     <ClCompile Include="main.c" />
@@ -122,10 +123,17 @@
     <ClCompile Include="mapElem.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="date.h" />
     <ClInclude Include="list.h" />
     <ClInclude Include="listElem.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="mapElem.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="statistics.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="games.csv" />
+    <None Include="players.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
