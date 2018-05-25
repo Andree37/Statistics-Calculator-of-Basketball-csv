@@ -115,14 +115,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="commands.c" />
     <ClCompile Include="date.c" />
     <ClCompile Include="listArrayList.c" />
     <ClCompile Include="listElem.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="mapArrayList.c" />
     <ClCompile Include="mapElem.c" />
+    <ClCompile Include="player.c" />
+    <ClCompile Include="statistics.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="commands.h" />
     <ClInclude Include="date.h" />
     <ClInclude Include="list.h" />
     <ClInclude Include="listElem.h" />

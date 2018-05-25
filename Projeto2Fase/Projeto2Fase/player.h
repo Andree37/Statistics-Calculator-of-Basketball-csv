@@ -10,4 +10,4 @@ typedef struct player {
 	Date birthDate;
 	char gender;
 	Statistics statistics; /* valores acumulados para todos os jogos disputados */
-} Player;
+} Player;typedef Player *PtPlayer;PtPlayer playerCreate(int id, char* name, char* team, Date bDate, char gender, Statistics statistics);
