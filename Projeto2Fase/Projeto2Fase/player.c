@@ -16,6 +16,6 @@ PtPlayer playerCreate(int id, char* name, char* team, Date bDate, char gender , 
 	return player;
 }
 
-void playerPlayer(Player player) {
+void playerPrint(Player player) {
 
 }

@@ -14,6 +14,7 @@
 
 /* definicao de prototipos de funcoes, definidas depois do main() */
 void printCommandsMenu();
+void stringToUpper(char * str);
 
 /*
 * Este e a estrutura responsavel pelo metodo main onde corre o programa em si. Mostra o menu de comandos que o utilizador pode efetuar, de seguida efetua os escolhidos
@@ -111,20 +112,4 @@ void stringToUpper(char * str) /* transforma a string num 'upper case' da mesma 
 		*s = toupper((unsigned char)*s);
 		s++;
 	}
-}
-
-char** split(char *str, int nFields, const char *delim) { /* Esta funcao e responsavel pela separacao de registos, depois utilizada no loadp e loadg*/
-
-	char **tokens = malloc(sizeof(char*) * nFields);
-
-	int index = 0;
-	char *next_token = NULL;
-
-	char *token = strtok_s(str, delim, &next_token);
-	while (token) {
-		tokens[index++] = token;
-		token = strtok_s(NULL, delim, &next_token);
-	}
-
-	return tokens;
 }

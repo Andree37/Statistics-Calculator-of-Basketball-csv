@@ -1,5 +1,8 @@
 #include "commands.h"
 
+char** split(char *str, int nFields, const char *delim);
+void createStatistics();
+
 
 char** split(char *str, int nFields, const char *delim) {
 
@@ -17,7 +20,7 @@ char** split(char *str, int nFields, const char *delim) {
 	return tokens;
 }
 
-load(char *playerFile, char *statsFile) {
+void load(char *playerFile, char *statsFile) {
 	PtList list = listCreate(300);
 	FILE *fd, *fd2;
 	int err = fopen_s(&fd, statsFile, "r");
@@ -61,7 +64,6 @@ load(char *playerFile, char *statsFile) {
 	}
 	printf("\n\nForam lidos %d jogadores... \n", countPlayers);
 	fclose(fd);
-	playerListSort(&list);
 
 	return list;
 }

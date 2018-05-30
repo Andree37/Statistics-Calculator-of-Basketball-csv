@@ -1,0 +1,3 @@
+﻿  mapElem.c
+c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\mapelem.c(4): warning C4013: 'printf' undefined; assuming extern returning int
+  Projeto2Fase.vcxproj -> C:\Users\AndreLaptop\Documents\GitHub\ATAD_2FASE_PROJETO\Projeto2Fase\x64\Debug\Projeto2Fase.exe
