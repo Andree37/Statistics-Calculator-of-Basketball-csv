@@ -7,4 +7,4 @@
 #include "player.h"
 
 
-void load();
+void load(char *playerFile, char *statsFile);

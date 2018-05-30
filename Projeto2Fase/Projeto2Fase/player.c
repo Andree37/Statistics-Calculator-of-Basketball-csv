@@ -2,16 +2,20 @@
 #include <string.h>
 
 
-PtPlayer playerCreate(int id, char* name, char* team, Date bDate, char gender, Statistics statistics)
+PtPlayer playerCreate(int id, char* name, char* team, Date bDate, char gender , Statistics statistics)
 {
-	PtPlayer x = (PtPlayer)malloc(sizeof(Player));
+	PtPlayer player = (PtPlayer)malloc(sizeof(Player));
 
-	x->id = id;
-	strcpy_s(x->name, strlen(name), name);
-	strcpy_s(x->team, strlen(team), team);
-	x->birthDate = bDate;
-	x->gender = gender;
-	x->statistics = statistics;
+	player->id = id;
+	strcpy_s(player->name, strlen(name), name);
+	strcpy_s(player->team, strlen(team), team);
+	player->birthDate = bDate;
+	player->gender = gender;
+	player->statistics = statistics;
 
-	return x;
+	return player;
+}
+
+void playerPlayer(Player player) {
+
 }

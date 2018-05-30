@@ -2,5 +2,5 @@
 #include <stdio.h>
 
 void listElemPrint(ListElem elem) {
-	printf("%d \n", elem);
+	playerPrint(elem);
 }

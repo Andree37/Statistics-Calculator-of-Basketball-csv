@@ -9,7 +9,7 @@
 
 /* Estrutura de dados que guarda um dia, mes e ano */
 typedef struct date {
-	int day, month, year;
+	unsigned int day, month, year;
 }Date;
 
 /* tipo definido para ponteiro de data */

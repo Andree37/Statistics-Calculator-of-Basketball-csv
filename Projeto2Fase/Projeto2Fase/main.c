@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
 		else if (equalsStringIgnoreCase(command, "LOAD")) {
 			//commandloadG(&statsList); /* chama a funcao LoadG depois de passar por algumas verificacoes */
 		}
-		else if (equalsStringIgnoreCase(command, "CLAER")) {
+		else if (equalsStringIgnoreCase(command, "CLEAR")) {
 			//commandloadP(&playerList); /* chama a funcao LoadP depois de passar por algumas verificacoes */
 		}
 		else if (equalsStringIgnoreCase(command, "SHOW")) {
