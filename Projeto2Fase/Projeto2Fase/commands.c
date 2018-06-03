@@ -39,8 +39,36 @@ void load(char *playerFile, char *statsFile) {
 
 	int countStatistics = 0;
 	int countPlayers = 0;
+	PtStatistics stats;
 
+	PtStatistics newstats;
 
+	int game=0;
+	while (fgets(nextline, sizeof(nextline), fd2)) {
+		if (strlen(nextline) < 1)
+			continue;
+
+		char **tokens = split(nextline, 7, ";");
+
+		int playerId = atoi(tokens[0]);
+		char* name = atoi(tokens[1]);//nao faz nada de momento
+		strcpy_s(name, strlen(tokens[1]), tokens[1]);
+
+		char* team;//= atof(tokens[2]);
+			strcpy_s(team, strlen(tokens[2]), tokens[2]);
+
+		int day = atof(tokens[3]);
+		int month = atof(tokens[4]);
+		int year = atof(tokens[5]);
+
+		char gender = atof(tokens[6]);
+
+		
+		Date d = dateCreate(day, month, year);
+
+		PtPlayer p= playerCreate(playerId, name, team, d, gender, statistics);
+
+	}
 	while (fgets(nextline, sizeof(nextline), fd)) {
 		if (strlen(nextline) < 1)
 			continue;
@@ -55,11 +83,18 @@ void load(char *playerFile, char *statsFile) {
 		int fouls = atof(tokens[5]);
 		int blocks = atof(tokens[6]);
 
+		if (stats == NULL ) {
+			stats = statisticsCreate(two, three, assists, fouls, blocks);
+			
+		}else
+		 newstats = statisticsCreate(two, three, assists, fouls, blocks);
+
 		
 
 		free(tokens);
-		countPlayers++;
-
+		//countPlayers++;
+		if (game != idGame)
+			game = idGame;
 
 	}
 	printf("\n\nForam lidos %d jogadores... \n", countPlayers);
