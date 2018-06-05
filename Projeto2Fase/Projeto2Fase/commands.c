@@ -40,7 +40,7 @@ void load(char *playerFile, char *statsFile) {
 	int countStatistics = 0;
 	int countPlayers = 0;
 	PtStatistics stats;
-
+	PtStatisticsList statslist = statisticsListCreate(600);
 	PtStatistics newstats;
 
 	int game=0;
@@ -83,6 +83,11 @@ void load(char *playerFile, char *statsFile) {
 		int fouls = atof(tokens[5]);
 		int blocks = atof(tokens[6]);
 
+
+		if (game != idGame) {
+			statisticsListAdd(stats, statslist);
+			game = idGame;
+		}
 		if (stats == NULL ) {
 			stats = statisticsCreate(two, three, assists, fouls, blocks);
 			
@@ -90,11 +95,10 @@ void load(char *playerFile, char *statsFile) {
 		 newstats = statisticsCreate(two, three, assists, fouls, blocks);
 
 		
-
+		game++;
 		free(tokens);
 		//countPlayers++;
-		if (game != idGame)
-			game = idGame;
+		
 
 	}
 	printf("\n\nForam lidos %d jogadores... \n", countPlayers);
