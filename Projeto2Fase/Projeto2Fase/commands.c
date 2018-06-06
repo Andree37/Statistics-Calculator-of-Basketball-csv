@@ -1,4 +1,5 @@
 #include "commands.h"
+#include "statistics.h"
 
 char** split(char *str, int nFields, const char *delim);
 void createStatistics();
@@ -39,11 +40,12 @@ void load(char *playerFile, char *statsFile) {
 
 	int countStatistics = 0;
 	int countPlayers = 0;
+	int countGames = 0;
 	PtStatistics stats;
 	PtStatisticsList statslist = statisticsListCreate(600);
 	PtStatistics newstats;
 
-	int game=0;
+
 	while (fgets(nextline, sizeof(nextline), fd2)) {
 		if (strlen(nextline) < 1)
 			continue;
@@ -57,6 +59,8 @@ void load(char *playerFile, char *statsFile) {
 		char* team;//= atof(tokens[2]);
 			strcpy_s(team, strlen(tokens[2]), tokens[2]);
 
+
+
 		int day = atof(tokens[3]);
 		int month = atof(tokens[4]);
 		int year = atof(tokens[5]);
@@ -66,9 +70,18 @@ void load(char *playerFile, char *statsFile) {
 		
 		Date d = dateCreate(day, month, year);
 
-		PtPlayer p= playerCreate(playerId, name, team, d, gender, statistics);
+		PtStatistics stat = statisticsCreateZeros();
 
+		PtPlayer p= playerCreate(playerId, name, team, d, gender, stat);
+
+		listAdd(list, countPlayers, *p);
+
+		countPlayers++;
+
+		fclose(fd2);
 	}
+
+
 	while (fgets(nextline, sizeof(nextline), fd)) {
 		if (strlen(nextline) < 1)
 			continue;
@@ -83,25 +96,26 @@ void load(char *playerFile, char *statsFile) {
 		int fouls = atof(tokens[5]);
 		int blocks = atof(tokens[6]);
 
+		PtPlayer p;// = playerCreate(0, "", "", NULL, "", NULL);
+		int size;
+		listSize(list, &size);
 
-		if (game != idGame) {
-			statisticsListAdd(stats, statslist);
-			game = idGame;
+		for (int i = 0; i < size; i++) {
+			listGet(list, i, p);
+			if(p->id == playerId) {
+				statisticsAdd(&p->statistics, statisticsCreate(two, three, assists, fouls, blocks));
+			}
+
 		}
-		if (stats == NULL ) {
-			stats = statisticsCreate(two, three, assists, fouls, blocks);
-			
-		}else
-		 newstats = statisticsCreate(two, three, assists, fouls, blocks);
-
 		
-		game++;
 		free(tokens);
-		//countPlayers++;
+		countPlayers++;
 		
 
 	}
 	printf("\n\nForam lidos %d jogadores... \n", countPlayers);
+	printf("\nForam lidos %d estatisticas... \n", countPlayers);
+
 	fclose(fd);
 
 	return list;

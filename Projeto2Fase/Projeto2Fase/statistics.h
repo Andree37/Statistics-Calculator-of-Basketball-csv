@@ -27,3 +27,6 @@ void statisticsAdd(PtStatistics reciever, PtStatistics giver);
 PtStatisticsList statisticsListCreate(unsigned int capacity);
 void statisticsListAdd(PtStatistics stats, PtStatisticsList list);
 void statisticsListDestroy(PtStatisticsList list);
+PtStatistics statisticsCreateZeros();
+
+

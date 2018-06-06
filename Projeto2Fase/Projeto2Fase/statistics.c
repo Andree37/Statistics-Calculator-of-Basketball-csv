@@ -15,6 +15,20 @@ PtStatistics statisticsCreate(float two, float three, float assists, float fouls
 
 	return stats;
 }
+//Cria uma estatisticas com tudo a zeros
+PtStatistics statisticsCreateZeros()
+{
+	PtStatistics stats = (PtStatistics)malloc(sizeof(Statistics));
+	stats->twoPoints = 0;
+	stats->threePoints = 0;
+	stats->assists = 0;
+	stats->fouls = 0;
+	stats->blocks = 0;
+	stats->gamesPlayed = 0;
+
+	return stats;
+}
+
 
 void statisticsAdd(PtStatistics reciever, PtStatistics giver)
 {
@@ -30,6 +44,13 @@ void statisticsAdd(PtStatistics reciever, PtStatistics giver)
 		reciever->gamesPlayed++;
 	}
 }
+
+
+
+
+
+
+
 
 PtStatisticsList statisticsListCreate(unsigned int capacity) /* funcao 'construtora' da estrutura de dados statisticsList, retorna uma estrutura de dados para guardar estatisticas de jogos */
 {
