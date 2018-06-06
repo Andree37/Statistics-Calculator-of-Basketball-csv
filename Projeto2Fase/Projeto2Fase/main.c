@@ -9,6 +9,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "commands.h"
+#include "statistics.h"
+#include "input.h"
 
 //#include "commands.h"
 
@@ -23,8 +26,7 @@ void stringToUpper(char * str);
 int main(int argc, char** argv) {
 
 	/* declaracao de variaveis */
-	//PlayerList playerList = playerListCreate(300);
-	//StatisticsList statsList = statisticsListCreate(300);
+	PtList list= listCreate(300);
 
 
 	/* interpretador de comandos */
@@ -43,15 +45,13 @@ int main(int argc, char** argv) {
 		}
 		else if (equalsStringIgnoreCase(command, "LOAD")) {
 			//commandloadG(&statsList); /* chama a funcao LoadG depois de passar por algumas verificacoes */
+			commandLoad(list);
 		}
 		else if (equalsStringIgnoreCase(command, "CLEAR")) {
 			//commandloadP(&playerList); /* chama a funcao LoadP depois de passar por algumas verificacoes */
 		}
 		else if (equalsStringIgnoreCase(command, "SHOW")) {
 			//commandShowP(&playerList); /* chama a funcao ShowP depois de passar por algumas verificacoes, tal como ver se o playerList tem jogadores para mostrar */
-		}
-		else if (equalsStringIgnoreCase(command, "SEARCH")) {
-			//commandSearch(&playerList); /* chama a funcao commandLoadP depois de passar por algumas verificacoes */
 		}
 		else if (equalsStringIgnoreCase(command, "SORT")) {
 			//commandMFoulG(&statsList); /* chama a funcao MFoulG depois de passar por algumas verificacoes */
@@ -91,10 +91,10 @@ void printCommandsMenu() { /* Menu do utilizador */
 	printf("\n===================================================================================");
 	printf("\n                          MINI-PROJECT: Basket Scores                              ");
 	printf("\n===================================================================================");
-	printf("\nA. Info about players (LOADP, SHOWP, TABLE, SEARCH).");
-	printf("\nB. Specific info about players' performance during the games (LOADG, SEARCHG, MVP).");
-	printf("\nC. Aggregated info about games and players (MFOULP, MFOULG, FAIRPLAY).");
-	printf("\nD. Advanced indicator (IDEALTEAM)");
+	printf("\nA. Info (LOAD, SHOW, CLEAR, SEARCH).");
+	//printf("\nB. Specific info about players' performance during the games (LOADG, SEARCHG, MVP).");
+	printf("\nC. Aggregated info about games and players (SORT, AVG, NORM, TYPE).");
+	printf("\nD. Advanced indicator (KMEANS, CHECKTYPE)");
 	printf("\nE. Exit (QUIT)\n\n");
 	printf("COMMAND> ");
 }

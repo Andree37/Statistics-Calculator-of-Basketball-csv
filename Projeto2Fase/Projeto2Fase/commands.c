@@ -1,5 +1,9 @@
 #include "commands.h"
 #include "statistics.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <String.h>
+#include "input.h"
 
 char** split(char *str, int nFields, const char *delim);
 void createStatistics();
@@ -21,8 +25,20 @@ char** split(char *str, int nFields, const char *delim) {
 	return tokens;
 }
 
-void load(char *playerFile, char *statsFile) {
-	PtList list = listCreate(300);
+void commandLoad(PtList list) {
+	char commandP[21];
+	char commandS[21];
+	printf("Introduza o ficheiro dos jogadores\n");
+	readCharArray(&commandP, 21);
+	printf("Introduza o ficheiro das estatiscas\n");
+	readCharArray(&commandS, 21);
+
+	load(commandP, commandS, list);
+}
+
+
+void load(char *playerFile, char *statsFile, PtList list) {
+	//PtList list = listCreate(300);
 	FILE *fd, *fd2;
 	int err = fopen_s(&fd, statsFile, "r");
 	int err2 = fopen_s(&fd2, playerFile, "r");
@@ -56,10 +72,8 @@ void load(char *playerFile, char *statsFile) {
 		char* name = atoi(tokens[1]);//nao faz nada de momento
 		strcpy_s(name, strlen(tokens[1]), tokens[1]);
 
-		char* team;//= atof(tokens[2]);
+		char* team=(char*)malloc(sizeof(char))	;//= atof(tokens[2]);
 			strcpy_s(team, strlen(tokens[2]), tokens[2]);
-
-
 
 		int day = atof(tokens[3]);
 		int month = atof(tokens[4]);
@@ -96,7 +110,7 @@ void load(char *playerFile, char *statsFile) {
 		int fouls = atof(tokens[5]);
 		int blocks = atof(tokens[6]);
 
-		PtPlayer p;// = playerCreate(0, "", "", NULL, "", NULL);
+		PtPlayer p=(PtPlayer)malloc(sizeof(Player));// = playerCreate(0, "", "", NULL, "", NULL);
 		int size;
 		listSize(list, &size);
 
@@ -109,7 +123,7 @@ void load(char *playerFile, char *statsFile) {
 		}
 		
 		free(tokens);
-		countPlayers++;
+		countGames++;
 		
 
 	}

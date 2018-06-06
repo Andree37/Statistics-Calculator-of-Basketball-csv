@@ -117,6 +117,7 @@
   <ItemGroup>
     <ClCompile Include="commands.c" />
     <ClCompile Include="date.c" />
+    <ClCompile Include="input.c" />
     <ClCompile Include="listArrayList.c" />
     <ClCompile Include="listElem.c" />
     <ClCompile Include="main.c" />
@@ -128,6 +129,7 @@
   <ItemGroup>
     <ClInclude Include="commands.h" />
     <ClInclude Include="date.h" />
+    <ClInclude Include="input.h" />
     <ClInclude Include="list.h" />
     <ClInclude Include="listElem.h" />
     <ClInclude Include="map.h" />
