@@ -22,11 +22,12 @@ typedef Statistics *PtStatistics;
 
 typedef StatisticsList* PtStatisticsList;
 
-PtStatistics statisticsCreate(float two, float three, float assists, float fouls, float blocks);
-void statisticsAdd(PtStatistics reciever, PtStatistics giver);
+Statistics statisticsCreate(float two, float three, float assists, float fouls, float blocks);
+Statistics statisticsAdd(Statistics reciever, Statistics giver);
 PtStatisticsList statisticsListCreate(unsigned int capacity);
 void statisticsListAdd(PtStatistics stats, PtStatisticsList list);
 void statisticsListDestroy(PtStatisticsList list);
-PtStatistics statisticsCreateZeros();
+Statistics statisticsCreateZeros();
+void statisticsPrint(Statistics stats);
 
 

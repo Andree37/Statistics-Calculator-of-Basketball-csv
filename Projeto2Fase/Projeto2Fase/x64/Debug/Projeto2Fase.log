@@ -1,24 +1,10 @@
 ﻿  commands.c
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(32): warning C4047: 'função': 'char *' difere em níveis de indireção de 'char (*)[21]'
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(32): warning C4024: 'readCharArray': tipos diferentes para parâmetro formal e real 1
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(34): warning C4047: 'função': 'char *' difere em níveis de indireção de 'char (*)[21]'
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(34): warning C4024: 'readCharArray': tipos diferentes para parâmetro formal e real 1
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(36): warning C4020: 'load': muitos parâmetros reais
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(40): warning C4029: lista de parâmetros formais declarada diferente da definição
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(48): warning C4098: 'load': função 'void' retornando um valor
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(52): warning C4098: 'load': função 'void' retornando um valor
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(122): warning C4244: 'função': conversão de 'int' para 'float', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(137): warning C4098: 'load': função 'void' retornando um valor
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(72): warning C4047: 'inicializando': 'char *' difere em níveis de indireção de 'int'
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(80): warning C4244: 'inicializando': conversão de 'double' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(81): warning C4244: 'inicializando': conversão de 'double' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(82): warning C4244: 'inicializando': conversão de 'double' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(84): warning C4244: 'inicializando': conversão de 'double' para 'char', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(109): warning C4244: 'inicializando': conversão de 'double' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(110): warning C4244: 'inicializando': conversão de 'double' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(111): warning C4244: 'inicializando': conversão de 'double' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(112): warning C4244: 'inicializando': conversão de 'double' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(113): warning C4244: 'inicializando': conversão de 'double' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(62): warning C4101: 'newstats': variável local não referenciada
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(60): warning C4101: 'stats': variável local não referenciada
-  Projeto2Fase.vcxproj -> D:\1 Ano\2semestre\Atad\Projeto 2ºFase\ATAD_2FASE_PROJETO\Projeto2Fase\x64\Debug\Projeto2Fase.exe
+c:\users\andre\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(42): warning C4013: 'toupper' indefinido; assumindo extern retornando int
+c:\users\andre\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(170): warning C4244: 'função': conversão de 'int' para 'float', possível perda de dados
+c:\users\andre\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(188): warning C4098: 'load': função 'void' retornando um valor
+c:\users\andre\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(156): warning C4244: 'inicializando': conversão de 'double' para 'int', possível perda de dados
+c:\users\andre\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(157): warning C4244: 'inicializando': conversão de 'double' para 'int', possível perda de dados
+c:\users\andre\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(158): warning C4244: 'inicializando': conversão de 'double' para 'int', possível perda de dados
+c:\users\andre\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(159): warning C4244: 'inicializando': conversão de 'double' para 'int', possível perda de dados
+c:\users\andre\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(160): warning C4244: 'inicializando': conversão de 'double' para 'int', possível perda de dados
+  Projeto2Fase.vcxproj -> C:\Users\andre\Documents\github\ATAD_2FASE_PROJETO\Projeto2Fase\x64\Debug\Projeto2Fase.exe

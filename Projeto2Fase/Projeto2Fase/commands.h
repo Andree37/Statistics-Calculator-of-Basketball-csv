@@ -6,5 +6,11 @@
 #include "list.h"
 #include "player.h"
 
+int equalsStringIgnoreCase(char str1[], char str2[]);
+void stringToUpper(char * str);
 
-void load(char *playerFile, char *statsFile);
+void commandLoad(PtList list);
+void commandShow(PtList list);
+void commandClear(PtList list);
+void commandSort(PtList list);
+

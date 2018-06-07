@@ -14,7 +14,7 @@ typedef struct player {
 
 typedef Player *PtPlayer;
 
-PtPlayer playerCreate(int id, char* name, char* team, Date bDate, char gender, PtStatistics statistics);
+Player playerCreate(int id, char* name, char* team, Date bDate, char gender, Statistics statistics);
 void playerPrint(Player player);
 
 

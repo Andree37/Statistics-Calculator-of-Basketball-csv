@@ -3,54 +3,38 @@
 #include "statistics.h"
 
 
-PtStatistics statisticsCreate(float two, float three, float assists, float fouls, float blocks)
+Statistics statisticsCreate(float two, float three, float assists, float fouls, float blocks)
 {
-	PtStatistics stats = (PtStatistics)malloc(sizeof(Statistics));
-	stats->twoPoints = two;
-	stats->threePoints = three;
-	stats->assists = assists;
-	stats->fouls = fouls;
-	stats->blocks = blocks;
-	stats->gamesPlayed = 0;
+	Statistics stats;
+	stats.twoPoints = two;
+	stats.threePoints = three;
+	stats.assists = assists;
+	stats.fouls = fouls;
+	stats.blocks = blocks;
+	stats.gamesPlayed = 0;
 
 	return stats;
 }
+
 //Cria uma estatisticas com tudo a zeros
-PtStatistics statisticsCreateZeros()
+Statistics statisticsCreateZeros()
 {
-	PtStatistics stats = (PtStatistics)malloc(sizeof(Statistics));
-	stats->twoPoints = 0;
-	stats->threePoints = 0;
-	stats->assists = 0;
-	stats->fouls = 0;
-	stats->blocks = 0;
-	stats->gamesPlayed = 0;
+	Statistics stats = statisticsCreate(0,0,0,0,0);
 
 	return stats;
 }
 
-
-void statisticsAdd(PtStatistics reciever, PtStatistics giver)
+Statistics statisticsAdd(Statistics reciever, Statistics giver)
 {
-	if (reciever == NULL) {
-		statisticsCreate(0, 0, 0, 0, 0); //if there is no stats to recieve
-	}
-	if (giver != NULL && reciever != NULL) {
-		reciever->assists += giver->assists;
-		reciever->twoPoints += giver->twoPoints;
-		reciever->threePoints += giver->threePoints;
-		reciever->fouls += giver->fouls;
-		reciever->blocks += giver->blocks;
-		reciever->gamesPlayed++;
-	}
+		reciever.assists += giver.assists;
+		reciever.twoPoints += giver.twoPoints;
+		reciever.threePoints += giver.threePoints;
+		reciever.fouls += giver.fouls;
+		reciever.blocks += giver.blocks;
+		reciever.gamesPlayed++;
+
+		return reciever;
 }
-
-
-
-
-
-
-
 
 PtStatisticsList statisticsListCreate(unsigned int capacity) /* funcao 'construtora' da estrutura de dados statisticsList, retorna uma estrutura de dados para guardar estatisticas de jogos */
 {
@@ -75,4 +59,8 @@ void statisticsListDestroy(PtStatisticsList list) /* procedimento que liberta o 
 	list->capacity = 0;
 	list->size = 0;
 	free(list->elements);
+}
+
+void statisticsPrint(Statistics stats) {
+	printf("| %5.2f   |  %5.2f   |  %5.2f   |  %5.2f   |  %5.2f   |  %4d  |", stats.twoPoints, stats.threePoints, stats.assists, stats.fouls, stats.blocks, stats.gamesPlayed);
 }

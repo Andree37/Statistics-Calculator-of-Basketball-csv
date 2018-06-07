@@ -44,17 +44,16 @@ int main(int argc, char** argv) {
 			quit = 1; /* vai provocar a saída do interpretador */
 		}
 		else if (equalsStringIgnoreCase(command, "LOAD")) {
-			//commandloadG(&statsList); /* chama a funcao LoadG depois de passar por algumas verificacoes */
 			commandLoad(list);
 		}
 		else if (equalsStringIgnoreCase(command, "CLEAR")) {
-			//commandloadP(&playerList); /* chama a funcao LoadP depois de passar por algumas verificacoes */
+			commandClear(list);
 		}
 		else if (equalsStringIgnoreCase(command, "SHOW")) {
-			//commandShowP(&playerList); /* chama a funcao ShowP depois de passar por algumas verificacoes, tal como ver se o playerList tem jogadores para mostrar */
+			commandShow(list);
 		}
 		else if (equalsStringIgnoreCase(command, "SORT")) {
-			//commandMFoulG(&statsList); /* chama a funcao MFoulG depois de passar por algumas verificacoes */
+			commandSort(list);
 		}
 		else if (equalsStringIgnoreCase(command, "AVG")) {
 			//commandMFoulP(&statsList, &playerList); /* chama a funcao MFoulP depois de passar por algumas verificacoes */
@@ -77,8 +76,8 @@ int main(int argc, char** argv) {
 	}
 
 	/* libertar memória e apresentar mensagem de saída. */
-	//playerListDestroy(&playerList); /*Liberta o espaco do playerList*/
-	//statisticsListDestroy(&statsList); /*Liberta o espaco do statsList*/
+
+	listDestroy(&list);
 
 
 	printf("FECHADO COM SUCESSO\n"); /* Mostra uma mensagem de saida */
@@ -97,19 +96,4 @@ void printCommandsMenu() { /* Menu do utilizador */
 	printf("\nD. Advanced indicator (KMEANS, CHECKTYPE)");
 	printf("\nE. Exit (QUIT)\n\n");
 	printf("COMMAND> ");
-}
-
-int equalsStringIgnoreCase(char str1[], char str2[]) /* Esta funcao devolve true se as strings que recebem forem iguas, independente do 'case', false se nao */
-{
-	stringToUpper(str1);
-	return (strcmp(str1, str2) == 0);
-}
-
-void stringToUpper(char * str) /* transforma a string num 'upper case' da mesma */
-{
-	char *s = str;
-	while (*s) {
-		*s = toupper((unsigned char)*s);
-		s++;
-	}
 }
