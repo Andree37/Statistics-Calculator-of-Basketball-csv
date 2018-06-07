@@ -247,16 +247,13 @@ void sort(PtList list) {
 						listSet(clone, j + 1, elem, &elem2);
 					}
 				}
-
-				if ((equalsStringIgnoreCase(option, date) != 0)) {
+				else if ((equalsStringIgnoreCase(option, date) != 0)) {
 					if (isYoungerThan(elem.birthDate, elem2.birthDate)) {
 						listSet(clone, j, elem2, &elem);
 						listSet(clone, j + 1, elem, &elem2);
 					}
 				}
-
-
-				if ((equalsStringIgnoreCase(option, games) != 0)) {
+				else if ((equalsStringIgnoreCase(option, games) != 0)) {
 					if (elem.statistics.gamesPlayed > elem2.statistics.gamesPlayed) {
 						listSet(clone, j, elem2, &elem);
 						listSet(clone, j + 1, elem, &elem2);
@@ -270,6 +267,7 @@ void sort(PtList list) {
 	else {
 		printf("Lista sem registos\n");
 	}
+	listDestroy(&clone);
 }
 
 
