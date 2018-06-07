@@ -13,6 +13,7 @@ void clear(PtList list);
 void sort(PtList list);
 PtList createClone(PtList list);
 Statistics averageCalculation(Statistics stat);
+PtList averageStatistics(PtList players);
 
 
 
@@ -70,6 +71,7 @@ PtList averageStatistics(PtList players) {
 	Player avgPlayer;
 	Statistics avgStats;
 	int size;
+	int index = 0;
 	listSize(players, &size);
 	PtList avgList = listCreate(size);
 
@@ -81,7 +83,7 @@ PtList averageStatistics(PtList players) {
 
 				avgStats = statisticsAdd(statisticsCreateZeros(), averageCalculation(player.statistics), player.statistics.gamesPlayed);
 				avgPlayer = playerCreate(player.id, player.name, player.team, player.birthDate, player.gender, avgStats);
-				listAdd(avgList, i, avgPlayer);
+				listAdd(avgList, index++, avgPlayer);
 			}
 		}
 	}
@@ -226,7 +228,7 @@ void load(char *playerFile, char *statsFile, PtList list) {
 		for (int i = 0; i < size; i++) {
 			listGet(list, i, &player);
 			if (player.id == playerId) {
-				Statistics stats = statisticsCreate(two, three, assists, fouls, blocks);
+				Statistics stats = statisticsCreate(two, three, fouls, assists, blocks);
 				Statistics newStats;
 				newStats = statisticsAdd(player.statistics, stats, 0);
 				Player newPlayer = playerCreate(player.id, player.name, player.team, player.birthDate, player.gender, newStats);

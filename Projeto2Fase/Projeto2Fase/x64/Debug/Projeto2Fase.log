@@ -1,10 +1,1 @@
-﻿  commands.c
-c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(45): warning C4013: 'toupper' undefined; assuming extern returning int
-c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(229): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(247): warning C4098: 'load': 'void' function returning a value
-c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(215): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(216): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(217): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(218): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(219): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-  Projeto2Fase.vcxproj -> C:\Users\AndreLaptop\Documents\GitHub\ATAD_2FASE_PROJETO\Projeto2Fase\x64\Debug\Projeto2Fase.exe
+﻿  Projeto2Fase.vcxproj -> C:\Users\AndreLaptop\Documents\GitHub\ATAD_2FASE_PROJETO\Projeto2Fase\x64\Debug\Projeto2Fase.exe
