@@ -255,6 +255,7 @@ void sort(PtList list) {
 					}
 				}
 
+
 				if ((equalsStringIgnoreCase(option, games) != 0)) {
 					if (elem.statistics.gamesPlayed > elem2.statistics.gamesPlayed) {
 						listSet(clone, j, elem2, &elem);
