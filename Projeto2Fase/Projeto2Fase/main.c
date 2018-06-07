@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
 			commandSort(list);
 		}
 		else if (equalsStringIgnoreCase(command, "AVG")) {
-			//commandMFoulP(&statsList, &playerList); /* chama a funcao MFoulP depois de passar por algumas verificacoes */
+			avg(list);
 		}
 		else if (equalsStringIgnoreCase(command, "NORM")) {
 			//commandFairPlay(&statsList, &playerList); /* chama a funcao FairPlay depois de passar por algumas verificacoes, tal como ambas as listas, statsList e playersList terem jogadores e estatisticas */

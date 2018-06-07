@@ -23,7 +23,7 @@ typedef Statistics *PtStatistics;
 typedef StatisticsList* PtStatisticsList;
 
 Statistics statisticsCreate(float two, float three, float assists, float fouls, float blocks);
-Statistics statisticsAdd(Statistics reciever, Statistics giver);
+Statistics statisticsAdd(Statistics reciever, Statistics giver, int games);
 PtStatisticsList statisticsListCreate(unsigned int capacity);
 void statisticsListAdd(PtStatistics stats, PtStatisticsList list);
 void statisticsListDestroy(PtStatisticsList list);

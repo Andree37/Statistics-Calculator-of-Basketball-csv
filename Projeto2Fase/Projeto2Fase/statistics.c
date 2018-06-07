@@ -24,8 +24,11 @@ Statistics statisticsCreateZeros()
 	return stats;
 }
 
-Statistics statisticsAdd(Statistics reciever, Statistics giver)
+Statistics statisticsAdd(Statistics reciever, Statistics giver, int games)
 {
+	if (games != 0) {
+		reciever.gamesPlayed = games;
+	}
 		reciever.assists += giver.assists;
 		reciever.twoPoints += giver.twoPoints;
 		reciever.threePoints += giver.threePoints;
@@ -38,7 +41,7 @@ Statistics statisticsAdd(Statistics reciever, Statistics giver)
 
 PtStatisticsList statisticsListCreate(unsigned int capacity) /* funcao 'construtora' da estrutura de dados statisticsList, retorna uma estrutura de dados para guardar estatisticas de jogos */
 {
-	PtStatisticsList list = (PtStatistics)malloc(sizeof(Statistics));
+	PtStatisticsList list = (PtStatisticsList)malloc(sizeof(StatisticsList));
 	list->capacity = capacity;
 	list->size = 0;
 	list->elements = (Statistics*)calloc(capacity, sizeof(Statistics));

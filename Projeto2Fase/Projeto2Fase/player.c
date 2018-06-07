@@ -20,5 +20,4 @@ void playerPrint(Player player) {
 	printf("Jogador %3d : %-20s | %-15s | %02d/%02d/%04d | %c  ",
 		player.id, player.name, player.team, player.birthDate.day, player.birthDate.month, player.birthDate.year, player.gender);
 	statisticsPrint(player.statistics);
-	printf("\n");
 }

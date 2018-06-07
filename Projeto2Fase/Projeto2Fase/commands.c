@@ -4,12 +4,15 @@
 #include <stdlib.h>
 #include <String.h>
 #include "input.h"
+#include "averageMVPPlayer.h"
 
 char** split(char *str, int nFields, const char *delim);
 void load(char *playerFile, char *statsFile, PtList list);
 void show(PtList list);
 void clear(PtList list);
 void sort(PtList list);
+PtList createClone(PtList list);
+Statistics averageCalculation(Statistics stat);
 
 
 
@@ -44,13 +47,69 @@ void stringToUpper(char * str) /* transforma a string num 'upper case' da mesma 
 	}
 }
 
+PtList createClone(PtList list) {
+	int size;
+	listSize(list, &size);
+	ListElem elem;
+
+	if (size > 0) {
+
+		PtList clone = listCreate(size);
+
+		for (int i = 0; i < size; i++) {
+			listGet(list, i, &elem);
+			listAdd(clone, i, elem);
+		}
+		return clone;
+	}
+	return NULL;
+}
+
+PtList averageStatistics(PtList players) {
+	Player player;
+	Player avgPlayer;
+	Statistics avgStats;
+	int size;
+	listSize(players, &size);
+	PtList avgList = listCreate(size);
+
+	if (players != NULL) {
+		
+		for (int i = 0; i < size; i++) {
+			listGet(players, i, &player);
+			if (player.statistics.gamesPlayed > 0) {
+
+				avgStats = statisticsAdd(statisticsCreateZeros(), averageCalculation(player.statistics), player.statistics.gamesPlayed);
+				avgPlayer = playerCreate(player.id, player.name, player.team, player.birthDate, player.gender, avgStats);
+				listAdd(avgList, i, avgPlayer);
+			}
+		}
+	}
+	return avgList;
+}
+
+Statistics averageCalculation(Statistics stat) {
+	Statistics avg;
+	int games = stat.gamesPlayed;
+	if (games != 0) {
+		avg.twoPoints = stat.twoPoints / games;
+		avg.threePoints = stat.threePoints / games;
+		avg.assists = stat.assists / games;
+		avg.fouls = stat.fouls / games;
+		avg.blocks = stat.blocks / games;
+		avg.gamesPlayed = games;
+	}
+
+	return avg;
+}
+
 void commandLoad(PtList list) {
 	if (list != NULL) {
 		char commandP[21];
 		char commandS[21];
 		printf("Introduza o ficheiro dos jogadores: ");
 		gets_s(commandP, sizeof(commandP));
-		printf("/nIntroduza o ficheiro dos jogos: ");
+		printf("Introduza o ficheiro dos jogos: ");
 		gets_s(commandS, sizeof(commandS));
 		printf("\n");
 
@@ -169,7 +228,7 @@ void load(char *playerFile, char *statsFile, PtList list) {
 			if (player.id == playerId) {
 				Statistics stats = statisticsCreate(two, three, assists, fouls, blocks);
 				Statistics newStats;
-				newStats = statisticsAdd(player.statistics, stats);
+				newStats = statisticsAdd(player.statistics, stats, 0);
 				Player newPlayer = playerCreate(player.id, player.name, player.team, player.birthDate, player.gender, newStats);
 				listSet(list, i, newPlayer, &player);
 			}
@@ -201,6 +260,7 @@ void show(PtList list) {
 	for (int i = 0; i < size; i++) {
 		listGet(list, i, &elem);
 		listElemPrint(elem);
+		printf("\n");
 	}
 }
 
@@ -210,8 +270,8 @@ void clear(PtList list) {
 }
 
 void sort(PtList list) {
-	int size;
-	listSize(list, &size);
+	int changed = 1;
+
 	ListElem elem;
 	ListElem elem2;
 
@@ -220,14 +280,15 @@ void sort(PtList list) {
 	char* games = "JOGOS";
 	char option[10];
 
-	PtList clone = listCreate(size);
+	PtList clone = createClone(list);
 
-	if (size > 0) {
+	int size;
+	listSize(clone, &size);
 
-		for (int i = 0; i < size; i++) {
-			listGet(list, i, &elem);
-			listAdd(clone, i, elem);
-		}
+	if (clone != NULL) {
+
+
+
 
 		printf("Escolha a maneira de ordenacao\n\n");
 		printf("Nome - para a ordenacao pelo nome\n");
@@ -259,15 +320,55 @@ void sort(PtList list) {
 						listSet(clone, j + 1, elem, &elem2);
 					}
 				}
+				else {
+					changed = 0;
+				}
 			}
 		}
-
-		listPrint(clone);
+		if (changed)
+			listPrint(clone);
+		else {
+			printf("Input invalido. Por favor insira Nome, Jogos ou Data.");
+		}
 	}
 	else {
 		printf("Lista sem registos\n");
 	}
 	listDestroy(&clone);
 }
+
+void avg(PtList list) {
+	PtList avgList = averageStatistics(list);
+	Player player;
+	Statistics avgStats;
+	float avgMVP;
+	int size;
+	listSize(avgList, &size);
+
+	PtMVPPlayerlist avgMVPList = mvpPlayerListCreate(size);
+	AvgMVPPlayer playerAVG;
+
+	if (size > 0) {
+		for (int i = 0; i < size; i++) {
+			listGet(avgList, i, &player);
+			avgStats = player.statistics;
+			avgMVP = 3 * avgStats.threePoints + 2 * avgStats.twoPoints + avgStats.assists + 2 * avgStats.blocks - (3 * avgStats.fouls);
+			playerAVG = avgMVPPlayerCreate(player, avgMVP);
+			mvpPLayerListAdd(avgMVPList, playerAVG);
+		}
+
+		for (int i = 0; i < size - 1; i++) {
+			for (int j = 0; j < size - i - 1; j++) {
+				if (avgMVPList->elements[j].avgMVP < avgMVPList->elements[j + 1].avgMVP) {
+					AvgMVPPlayer aux = avgMVPList->elements[j];
+					avgMVPList->elements[j] = avgMVPList->elements[j + 1];
+					avgMVPList->elements[j + 1] = aux;
+				}
+			}
+		}
+		mvpPlayerListPrint(avgMVPList);
+	}
+}
+
 
 
