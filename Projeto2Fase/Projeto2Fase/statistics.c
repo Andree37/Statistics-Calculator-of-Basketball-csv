@@ -28,13 +28,15 @@ Statistics statisticsAdd(Statistics reciever, Statistics giver, int games)
 {
 	if (games != 0) {
 		reciever.gamesPlayed = games;
-	}
+	}else
+		reciever.gamesPlayed++;
+
 		reciever.assists += giver.assists;
 		reciever.twoPoints += giver.twoPoints;
 		reciever.threePoints += giver.threePoints;
 		reciever.fouls += giver.fouls;
 		reciever.blocks += giver.blocks;
-		reciever.gamesPlayed++;
+		
 
 		return reciever;
 }

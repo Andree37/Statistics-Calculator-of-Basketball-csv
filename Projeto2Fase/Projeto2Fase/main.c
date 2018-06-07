@@ -34,6 +34,8 @@ int main(int argc, char** argv) {
 	int quit = 0;
 	while (!quit) {
 
+		system("cls");
+
 		printCommandsMenu();
 		fgets(command, sizeof(command), stdin);
 		/* descartar 'newline'. Utilizar esta técnica sempre que for lida uma
@@ -45,33 +47,44 @@ int main(int argc, char** argv) {
 		}
 		else if (equalsStringIgnoreCase(command, "LOAD")) {
 			commandLoad(list);
+			system("pause");
 		}
 		else if (equalsStringIgnoreCase(command, "CLEAR")) {
 			commandClear(list);
+			system("pause");
 		}
 		else if (equalsStringIgnoreCase(command, "SHOW")) {
 			commandShow(list);
+			system("pause");
 		}
 		else if (equalsStringIgnoreCase(command, "SORT")) {
 			commandSort(list);
+			system("pause");
 		}
 		else if (equalsStringIgnoreCase(command, "AVG")) {
 			avg(list);
+			system("pause");
 		}
 		else if (equalsStringIgnoreCase(command, "NORM")) {
-			//commandFairPlay(&statsList, &playerList); /* chama a funcao FairPlay depois de passar por algumas verificacoes, tal como ambas as listas, statsList e playersList terem jogadores e estatisticas */
+			norm(list);
+			system("pause");
+
 		}
 		else if (equalsStringIgnoreCase(command, "TYPE")) {
 			//commandIdealTeam(&statsList, &playerList); /* chama a funcao IdealTeam depois de passar por algumas verificacoes, tal como ambas as listas, statsList e playersList terem jogadores e estatisticas */
+			system("pause");
 		}
 		else if (equalsStringIgnoreCase(command, "CHECHTYPE")) {
 			//commandIdealTeam(&statsList, &playerList); /* chama a funcao IdealTeam depois de passar por algumas verificacoes, tal como ambas as listas, statsList e playersList terem jogadores e estatisticas */
+			system("pause");
 		}
 		else if (equalsStringIgnoreCase(command, "KMEANS")) {
 			//commandIdealTeam(&statsList, &playerList); /* chama a funcao IdealTeam depois de passar por algumas verificacoes, tal como ambas as listas, statsList e playersList terem jogadores e estatisticas */
+			system("pause");
 		}
 		else {
 			printf("Comando nao encontrado.\n"); /* Caso nao seja encontrado na cadeia de if-else a cima, e mostrada uma mensagem de erro a dizer que o comando nao foi encontrado */
+			system("pause");
 		}
 	}
 
@@ -79,7 +92,7 @@ int main(int argc, char** argv) {
 
 	listDestroy(&list);
 
-
+	
 	printf("FECHADO COM SUCESSO\n"); /* Mostra uma mensagem de saida */
 	return (EXIT_SUCCESS);
 }

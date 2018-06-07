@@ -15,7 +15,14 @@ PtList createClone(PtList list);
 Statistics averageCalculation(Statistics stat);
 PtList averageStatistics(PtList players);
 
-
+void calculateMax(PtList list, int* two, int* three, int* assists, int* fouls, int* blocks);
+void calculateMin(PtList list, int* two, int* three, int* assists, int* fouls, int* blocks);
+float normalizationCalculation(int max, int min, int val);
+Statistics statNormalizationCalculation(Statistics stat, int* twoMa, int* threeMa, int* assistsMa, int* foulsMa, int* blocksMa,
+	int* twoMi, int* threeMi, int* assistsMi, int* foulsMi, int* blocksMi);
+void norm(PtList list);
+float normalizationCalculation(int max, int min, int val);
+PtList normalizeStatistics(PtList players);
 
 char** split(char *str, int nFields, const char *delim) {
 
@@ -108,7 +115,10 @@ Statistics averageCalculation(Statistics stat) {
 void commandLoad(PtList list) {
 	if (list != NULL) {
 		char commandP[21];
+		
 		char commandS[21];
+		
+
 		printf("Introduza o ficheiro dos jogadores: ");
 		gets_s(commandP, sizeof(commandP));
 		printf("Introduza o ficheiro dos jogos: ");
@@ -368,9 +378,152 @@ void avg(PtList list) {
 				}
 			}
 		}
+		printf("Jogador  ID |         Nome         |   Equipa        |    Data    |Sexo|2Points  | 3Points  | Assists  | Fouls    | Blocks   | Games  |\n");
+
 		mvpPlayerListPrint(avgMVPList);
 	}
 }
 
+void norm(PtList list) {
+	
 
+	PtList normList = normalizeStatistics(list);
+
+	listPrint(normList);
+
+}
+
+void calculateMax(PtList list, int* two, int* three, int* assists, int* fouls, int* blocks) {
+	int size;
+	listSize(list, &size);
+	Player player;
+	listGet(list, 0, &player);
+
+	Statistics stat = player.statistics;
+
+	*two = stat.twoPoints;
+	*three = stat.threePoints;
+	*assists = stat.assists;
+	*fouls = stat.fouls;
+	*blocks = stat.blocks;
+
+	for (int i = 1; i < size; i++) {
+		listGet(list, i, &player);
+		stat = player.statistics;
+
+		if (*two < stat.twoPoints)
+			*two = stat.twoPoints;
+
+		if (*three < stat.threePoints)
+			*three = stat.threePoints;
+
+		if (*assists < stat.assists)
+			*assists = stat.assists;
+
+		if (*fouls < stat.fouls)
+			*fouls = stat.fouls;
+
+		if (*blocks < stat.blocks)
+			*blocks = stat.blocks;
+	}
+}
+
+	
+	void calculateMin(PtList list, int* two, int* three, int* assists, int* fouls, int* blocks) {
+		int size;
+		listSize(list, &size);
+		Player player;
+		listGet(list, 0, &player);
+
+		Statistics stat = player.statistics;
+
+		*two = stat.twoPoints;
+		*three = stat.threePoints;
+		*assists = stat.assists;
+		*fouls = stat.fouls;
+		*blocks = stat.blocks;
+
+		for (int i = 1; i < size; i++) {
+			listGet(list, i, &player);
+			stat = player.statistics;
+
+			if (*two > stat.twoPoints)
+				*two = stat.twoPoints;
+
+			if (*three > stat.threePoints)
+				*three = stat.threePoints;
+
+			if (*assists > stat.assists)
+				*assists = stat.assists;
+
+			if (*fouls > stat.fouls)
+				*fouls = stat.fouls;
+
+			if (*blocks > stat.blocks)
+				*blocks = stat.blocks;
+		}
+
+
+	}
+
+	PtList normalizeStatistics(PtList players) {
+		//matriz????
+
+		int twoMax, twoMin;
+		int threeMax, threeMin;
+		int assistsMax, assistsMin;
+		int foulsMax, foulsMin;
+		int blocksMax, blocksMin;
+
+
+		int size;
+		listSize(players, &size);
+
+		calculateMax(players, &twoMax, &threeMax, &assistsMax, &foulsMax, &blocksMax);
+		calculateMin(players, &twoMin, &threeMin, &assistsMin, &foulsMin, &blocksMin);
+
+
+		Player player;
+		PtList normList = listCreate(size);
+		int index = 0;
+		if (players != NULL) {
+
+			for (int i = 0; i < size; i++) {
+				listGet(players, i, &player);
+				if (player.statistics.gamesPlayed > 0) {
+
+					Statistics normStats = statisticsAdd(statisticsCreateZeros(), 
+						statNormalizationCalculation(player.statistics, &twoMax, &threeMax, &assistsMax, &foulsMax, &blocksMax,
+						&twoMin, &threeMin, &assistsMin, &foulsMin, &blocksMin), player.statistics.gamesPlayed);
+					Player avgPlayer = playerCreate(player.id, player.name, player.team, player.birthDate, player.gender, normStats);
+					listAdd(normList, index++, avgPlayer);
+				}
+			}
+		}
+		return normList;
+	}
+
+
+	float normalizationCalculation(int max, int min, int val ) {
+
+		return (float)(val-min)/(max-min);
+
+	}
+
+	Statistics statNormalizationCalculation(Statistics stat, int* twoMa, int* threeMa, int* assistsMa, int* foulsMa, int* blocksMa,
+											int* twoMi, int* threeMi, int* assistsMi, int* foulsMi, int* blocksMi) {
+	
+		Statistics norm;
+		int games = stat.gamesPlayed;
+		if (games != 0) {
+			norm.twoPoints = normalizationCalculation(twoMa, twoMi, stat.twoPoints);
+			norm.threePoints = normalizationCalculation(threeMa, threeMi, stat.threePoints);
+			norm.assists = normalizationCalculation(assistsMa, assistsMi, stat.assists);
+			norm.fouls = normalizationCalculation(foulsMa, foulsMi, stat.fouls);
+			norm.blocks = normalizationCalculation(blocksMa, blocksMi, stat.blocks);
+			norm.gamesPlayed = games;
+		}
+		
+
+	}
 
