@@ -42,9 +42,6 @@
     <ClCompile Include="commands.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="input.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="averageMVPPlayer.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -72,9 +69,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="commands.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="averageMVPPlayer.h">
