@@ -6,6 +6,10 @@
 #include "input.h"
 #include "averageMVPPlayer.h"
 
+
+void commandNorm(PtList list);
+void commandAvg(PtList list);
+
 char** split(char *str, int nFields, const char *delim);
 void load(char *playerFile, char *statsFile, PtList list);
 void show(PtList list);
@@ -22,6 +26,9 @@ Statistics statNormalizationCalculation(Statistics stat, float* twoMa, float* th
 	float* twoMi, float* threeMi, float* assistsMi, float* foulsMi, float* blocksMi);
 void norm(PtList list);
 PtList normalizeStatistics(PtList players);
+
+
+Statistics averageAllStats(PtList list);
 
 char** split(char *str, int nFields, const char *delim) {
 
@@ -408,7 +415,9 @@ void norm(PtList list) {
 	PtList normalizedList = normalizeStatistics(toNormList);
 
 	listPrint(normalizedList);
-	
+	listDestroy(&toNormList);
+
+	listDestroy(&normalizedList);
 
 }
 
@@ -545,3 +554,44 @@ Statistics statNormalizationCalculation(Statistics stat, float* twoMa, float* th
 
 }
 
+
+
+void type(PtList list) {
+	Statistics media= averageAllStats(list);
+	float twoPoints;
+	float threePoints;	
+	float assists;		
+	float fouls;		
+	float blocks;
+
+
+
+
+	PtList allStar;
+	PtList shootingGuard;
+	PtList pointGuard;
+
+}
+
+
+Statistics averageAllStats(PtList list) {
+	Statistics avg = statisticsCreateZeros();
+	Statistics aux;
+	Player auxP;
+	int size;
+	//int total;
+	listSize(list,&size);
+	for (int i = 0; i < size; i++) {
+		listGet(list, i, &auxP);
+		aux = auxP.statistics;
+		statisticsAdd(avg, aux, 0);
+	}
+	aux.assists = aux.assists / size;
+	aux.blocks = aux.blocks / size;
+	aux.fouls = aux.fouls / size;
+	aux.threePoints = aux.threePoints / size;
+	aux.twoPoints = aux.twoPoints / size;
+
+
+	return aux;
+}
