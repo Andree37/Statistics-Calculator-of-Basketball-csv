@@ -15,6 +15,7 @@ void load(char *playerFile, char *statsFile, PtList list);
 void show(PtList list);
 void clear(PtList list);
 void sort(PtList list);
+void avg(PtList list);
 PtList createClone(PtList list);
 Statistics averageCalculation(Statistics stat);
 PtList averageStatistics(PtList players);
@@ -298,6 +299,7 @@ void show(PtList list) {
 		listElemPrint(elem);
 		printf("\n");
 	}
+	//listprint(list); //podemos mudar o arraylist.c para ficar com boa apresentacao?
 }
 
 void clear(PtList list) {
@@ -415,10 +417,9 @@ void norm(PtList list) {
 	PtList normalizedList = normalizeStatistics(toNormList);
 
 	listPrint(normalizedList);
+
 	listDestroy(&toNormList);
-
 	listDestroy(&normalizedList);
-
 }
 
 void calculateMax(PtList list, float* two, float* three, float* assists, float* fouls, float* blocks) {
@@ -554,8 +555,6 @@ Statistics statNormalizationCalculation(Statistics stat, float* twoMa, float* th
 
 }
 
-
-
 void type(PtList list) {
 	Statistics media= averageAllStats(list);
 	float twoPoints;
@@ -573,13 +572,12 @@ void type(PtList list) {
 
 }
 
-
 Statistics averageAllStats(PtList list) {
 	Statistics avg = statisticsCreateZeros();
 	Statistics aux;
 	Player auxP;
 	int size;
-	//int total;
+
 	listSize(list,&size);
 	for (int i = 0; i < size; i++) {
 		listGet(list, i, &auxP);
