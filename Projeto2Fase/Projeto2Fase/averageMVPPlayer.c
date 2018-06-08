@@ -33,6 +33,5 @@ void mvpPLayerListAdd(PtMVPPlayerlist list, AvgMVPPlayer avg)
 void mvpPlayerListPrint(PtMVPPlayerlist list) {
 	for (int i = 0; i < list->size; i++) {
 		playerPrint(list->elements[i].player);
-		printf(" avgMVP = %.3f\n", list->elements[i].avgMVP);
 	}
 }

@@ -225,7 +225,6 @@ void listPrint(PtList list) {
 		for (int i = 0; i < list->size; i++) {
 			printf("At rank %d: ", i);
 			listElemPrint(list->elements[i]);
-			printf("\n");
 		}
 		printf("-------------- \n");
 	}

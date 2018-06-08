@@ -292,13 +292,8 @@ void show(PtList list) {
 		printf("Nao existe nenhum registo na tabela");
 		return;
 	}
-	printf("Jogador  ID |         Nome         |   Equipa        |    Data    |Sexo|2Points  | 3Points  |   Fouls  | Assists  | Blocks   | Games  |\n");
-	for (int i = 0; i < size; i++) {
-		listGet(list, i, &elem);
-		listElemPrint(elem);
-		printf("\n");
-	}
-	//listprint(list); //podemos mudar o arraylist.c para ficar com boa apresentacao?
+	printf("           Jogador   ID : NOME                | EQUIPA          | BIRTHDATE  |GENRE| 2POINTS |  3POINTS |  FOULS   | ASSISTS  |BLOCKS    | GAMES  |\n");
+	listPrint(list); //podemos mudar o arraylist.c para ficar com boa apresentacao?
 }
 
 void clear(PtList list) {
@@ -403,7 +398,7 @@ void avg(PtList list) {
 				}
 			}
 		}
-		printf("Jogador  ID |         Nome         |   Equipa        |    Data    |Sexo|2Points  | 3Points  | Assists  | Fouls    | Blocks   | Games  |\n");
+		printf("Jogador  ID |         Nome         |   Equipa        |    Data    |Sexo |2Points  | 3Points  | Assists  | Fouls    | Blocks   | Games  |\n");
 
 		mvpPlayerListPrint(avgMVPList);
 	}
@@ -495,6 +490,7 @@ void calculateMin(PtList list, float* two, float* three, float* assists, float* 
 
 PtList normalizeStatistics(PtList players) {
 
+	//matrizzzzzzzzzzzzzz???????????
 	float twoMax, twoMin;
 	float threeMax, threeMin;
 	float assistsMax, assistsMin;
@@ -555,6 +551,7 @@ Statistics statNormalizationCalculation(Statistics stat, float* twoMa, float* th
 }
 
 void type(PtList list) {
+
 	Statistics media= averageAllStats(list);
 	float twoPoints;
 	float threePoints;	

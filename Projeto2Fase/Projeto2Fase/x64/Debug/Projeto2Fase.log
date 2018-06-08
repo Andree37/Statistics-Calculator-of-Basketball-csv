@@ -1,4 +1,6 @@
-﻿  commands.c
+﻿  averageMVPPlayer.c
+c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\averagemvpplayer.c(34): warning C4018: '<': signed/unsigned mismatch
+  commands.c
 c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(59): warning C4013: 'toupper' undefined; assuming extern returning int
 c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(265): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
 c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(283): warning C4098: 'load': 'void' function returning a value
@@ -7,16 +9,15 @@ c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fa
 c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(253): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
 c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(254): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
 c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(255): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(563): warning C4101: 'blocks': unreferenced local variable
-c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(560): warning C4101: 'threePoints': unreferenced local variable
-c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(570): warning C4101: 'pointGuard': unreferenced local variable
-c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(561): warning C4101: 'assists': unreferenced local variable
-c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(569): warning C4101: 'shootingGuard': unreferenced local variable
-c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(562): warning C4101: 'fouls': unreferenced local variable
-c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(558): warning C4101: 'media': unreferenced local variable
-c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(559): warning C4101: 'twoPoints': unreferenced local variable
-c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(568): warning C4101: 'allStar': unreferenced local variable
-  main.c
-c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\main.c(73): warning C4013: 'type' undefined; assuming extern returning int
+c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(289): warning C4101: 'elem': unreferenced local variable
+c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(560): warning C4101: 'blocks': unreferenced local variable
+c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(557): warning C4101: 'threePoints': unreferenced local variable
+c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(567): warning C4101: 'pointGuard': unreferenced local variable
+c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(558): warning C4101: 'assists': unreferenced local variable
+c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(566): warning C4101: 'shootingGuard': unreferenced local variable
+c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(559): warning C4101: 'fouls': unreferenced local variable
+c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(555): warning C4101: 'media': unreferenced local variable
+c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(556): warning C4101: 'twoPoints': unreferenced local variable
+c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(565): warning C4101: 'allStar': unreferenced local variable
   Generating Code...
   Projeto2Fase.vcxproj -> C:\Users\AndreLaptop\Documents\GitHub\ATAD_2FASE_PROJETO\Projeto2Fase\x64\Debug\Projeto2Fase.exe
