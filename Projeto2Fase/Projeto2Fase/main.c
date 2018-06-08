@@ -62,11 +62,11 @@ int main(int argc, char** argv) {
 			system("pause");
 		}
 		else if (equalsStringIgnoreCase(command, "AVG")) {
-			avg(list);
+			commandAvg(list);
 			system("pause");
 		}
 		else if (equalsStringIgnoreCase(command, "NORM")) {
-			norm(list);
+			commandNorm(list);
 			system("pause");
 
 		}

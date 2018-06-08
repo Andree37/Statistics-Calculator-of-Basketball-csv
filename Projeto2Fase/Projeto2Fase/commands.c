@@ -15,13 +15,12 @@ PtList createClone(PtList list);
 Statistics averageCalculation(Statistics stat);
 PtList averageStatistics(PtList players);
 
-void calculateMax(PtList list, int* two, int* three, int* assists, int* fouls, int* blocks);
-void calculateMin(PtList list, int* two, int* three, int* assists, int* fouls, int* blocks);
-float normalizationCalculation(int max, int min, int val);
-Statistics statNormalizationCalculation(Statistics stat, int* twoMa, int* threeMa, int* assistsMa, int* foulsMa, int* blocksMa,
-	int* twoMi, int* threeMi, int* assistsMi, int* foulsMi, int* blocksMi);
+void calculateMax(PtList list, float* two, float* three, float* assists, float* fouls, float* blocks);
+void calculateMin(PtList list, float* two, float* three, float* assists, float* fouls, float* blocks);
+float normalizationCalculation(float max, float min, float val);
+Statistics statNormalizationCalculation(Statistics stat, float* twoMa, float* threeMa, float* assistsMa, float* foulsMa, float* blocksMa,
+	float* twoMi, float* threeMi, float* assistsMi, float* foulsMi, float* blocksMi);
 void norm(PtList list);
-float normalizationCalculation(int max, int min, int val);
 PtList normalizeStatistics(PtList players);
 
 char** split(char *str, int nFields, const char *delim) {
@@ -83,7 +82,7 @@ PtList averageStatistics(PtList players) {
 	PtList avgList = listCreate(size);
 
 	if (players != NULL) {
-		
+
 		for (int i = 0; i < size; i++) {
 			listGet(players, i, &player);
 			if (player.statistics.gamesPlayed > 0) {
@@ -115,9 +114,9 @@ Statistics averageCalculation(Statistics stat) {
 void commandLoad(PtList list) {
 	if (list != NULL) {
 		char commandP[21];
-		
+
 		char commandS[21];
-		
+
 
 		printf("Introduza o ficheiro dos jogadores: ");
 		gets_s(commandP, sizeof(commandP));
@@ -158,6 +157,24 @@ void commandClear(PtList list) {
 void commandSort(PtList list) {
 	if (list != NULL) {
 		sort(list);
+	}
+	else {
+		printf("Erro interno, nao existe uma lista para suportar este comando");
+	}
+}
+
+void commandAvg(PtList list) {
+	if (list != NULL) {
+		avg(list);
+	}
+	else {
+		printf("Erro interno, nao existe uma lista para suportar este comando");
+	}
+}
+
+void commandNorm(PtList list) {
+	if (list != NULL) {
+		norm(list);
 	}
 	else {
 		printf("Erro interno, nao existe uma lista para suportar este comando");
@@ -268,7 +285,7 @@ void show(PtList list) {
 		printf("Nao existe nenhum registo na tabela");
 		return;
 	}
-	printf("Jogador  ID |         Nome         |   Equipa        |    Data    |Sexo|2Points  | 3Points  | Assists  | Fouls    | Blocks   | Games  |\n");
+	printf("Jogador  ID |         Nome         |   Equipa        |    Data    |Sexo|2Points  | 3Points  |   Fouls  | Assists  | Blocks   | Games  |\n");
 	for (int i = 0; i < size; i++) {
 		listGet(list, i, &elem);
 		listElemPrint(elem);
@@ -385,15 +402,17 @@ void avg(PtList list) {
 }
 
 void norm(PtList list) {
+
+	PtList toNormList = averageStatistics(list);
+
+	PtList normalizedList = normalizeStatistics(toNormList);
+
+	listPrint(normalizedList);
 	
-
-	PtList normList = normalizeStatistics(list);
-
-	listPrint(normList);
 
 }
 
-void calculateMax(PtList list, int* two, int* three, int* assists, int* fouls, int* blocks) {
+void calculateMax(PtList list, float* two, float* three, float* assists, float* fouls, float* blocks) {
 	int size;
 	listSize(list, &size);
 	Player player;
@@ -410,43 +429,43 @@ void calculateMax(PtList list, int* two, int* three, int* assists, int* fouls, i
 	for (int i = 1; i < size; i++) {
 		listGet(list, i, &player);
 		stat = player.statistics;
+		if (stat.gamesPlayed > 0) {
+			if (*two < stat.twoPoints)
+				*two = stat.twoPoints;
 
-		if (*two < stat.twoPoints)
-			*two = stat.twoPoints;
+			if (*three < stat.threePoints)
+				*three = stat.threePoints;
 
-		if (*three < stat.threePoints)
-			*three = stat.threePoints;
+			if (*assists < stat.assists)
+				*assists = stat.assists;
 
-		if (*assists < stat.assists)
-			*assists = stat.assists;
+			if (*fouls < stat.fouls)
+				*fouls = stat.fouls;
 
-		if (*fouls < stat.fouls)
-			*fouls = stat.fouls;
-
-		if (*blocks < stat.blocks)
-			*blocks = stat.blocks;
+			if (*blocks < stat.blocks)
+				*blocks = stat.blocks;
+		}
 	}
 }
 
-	
-	void calculateMin(PtList list, int* two, int* three, int* assists, int* fouls, int* blocks) {
-		int size;
-		listSize(list, &size);
-		Player player;
-		listGet(list, 0, &player);
+void calculateMin(PtList list, float* two, float* three, float* assists, float* fouls, float* blocks) {
+	int size;
+	listSize(list, &size);
+	Player player;
+	listGet(list, 0, &player);
 
-		Statistics stat = player.statistics;
+	Statistics stat = player.statistics;
 
-		*two = stat.twoPoints;
-		*three = stat.threePoints;
-		*assists = stat.assists;
-		*fouls = stat.fouls;
-		*blocks = stat.blocks;
+	*two = stat.twoPoints;
+	*three = stat.threePoints;
+	*assists = stat.assists;
+	*fouls = stat.fouls;
+	*blocks = stat.blocks;
 
-		for (int i = 1; i < size; i++) {
-			listGet(list, i, &player);
-			stat = player.statistics;
-
+	for (int i = 1; i < size; i++) {
+		listGet(list, i, &player);
+		stat = player.statistics;
+		if (stat.gamesPlayed > 0) {
 			if (*two > stat.twoPoints)
 				*two = stat.twoPoints;
 
@@ -462,68 +481,67 @@ void calculateMax(PtList list, int* two, int* three, int* assists, int* fouls, i
 			if (*blocks > stat.blocks)
 				*blocks = stat.blocks;
 		}
-
-
 	}
+}
 
-	PtList normalizeStatistics(PtList players) {
-		//matriz????
+PtList normalizeStatistics(PtList players) {
 
-		int twoMax, twoMin;
-		int threeMax, threeMin;
-		int assistsMax, assistsMin;
-		int foulsMax, foulsMin;
-		int blocksMax, blocksMin;
-
-
-		int size;
-		listSize(players, &size);
-
-		calculateMax(players, &twoMax, &threeMax, &assistsMax, &foulsMax, &blocksMax);
-		calculateMin(players, &twoMin, &threeMin, &assistsMin, &foulsMin, &blocksMin);
+	float twoMax, twoMin;
+	float threeMax, threeMin;
+	float assistsMax, assistsMin;
+	float foulsMax, foulsMin;
+	float blocksMax, blocksMin;
 
 
-		Player player;
-		PtList normList = listCreate(size);
-		int index = 0;
-		if (players != NULL) {
+	int size;
+	listSize(players, &size);
 
-			for (int i = 0; i < size; i++) {
-				listGet(players, i, &player);
-				if (player.statistics.gamesPlayed > 0) {
+	calculateMax(players, &twoMax, &threeMax, &assistsMax, &foulsMax, &blocksMax);
+	calculateMin(players, &twoMin, &threeMin, &assistsMin, &foulsMin, &blocksMin);
 
-					Statistics normStats = statisticsAdd(statisticsCreateZeros(), 
-						statNormalizationCalculation(player.statistics, &twoMax, &threeMax, &assistsMax, &foulsMax, &blocksMax,
-						&twoMin, &threeMin, &assistsMin, &foulsMin, &blocksMin), player.statistics.gamesPlayed);
-					Player avgPlayer = playerCreate(player.id, player.name, player.team, player.birthDate, player.gender, normStats);
-					listAdd(normList, index++, avgPlayer);
-				}
+
+	Player player;
+	PtList normList = listCreate(size);
+	Statistics normStats;
+	Statistics stats;
+	int index = 0;
+	if (players != NULL) {
+
+		for (int i = 0; i < size; i++) {
+			listGet(players, i, &player);
+			if (player.statistics.gamesPlayed > 0) {
+				stats = statNormalizationCalculation(player.statistics, &twoMax, &threeMax, &assistsMax, &foulsMax, &blocksMax,
+					&twoMin, &threeMin, &assistsMin, &foulsMin, &blocksMin);
+				normStats = statisticsAdd(statisticsCreateZeros(), stats, player.statistics.gamesPlayed);
+				Player avgPlayer = playerCreate(player.id, player.name, player.team, player.birthDate, player.gender, normStats);
+				listAdd(normList, index++, avgPlayer);
 			}
 		}
-		return normList;
+	}
+	return normList;
+}
+
+float normalizationCalculation(float max, float min, float val) {
+
+	return (val - min) / (max - min);
+
+}
+
+Statistics statNormalizationCalculation(Statistics stat, float* twoMa, float* threeMa, float* assistsMa, float* foulsMa, float* blocksMa,
+	float* twoMi, float* threeMi, float* assistsMi, float* foulsMi, float* blocksMi) {
+
+	Statistics norm;
+	int games = stat.gamesPlayed;
+	if (games != 0) {
+		norm.twoPoints = normalizationCalculation(*twoMa, *twoMi, stat.twoPoints);
+		norm.threePoints = normalizationCalculation(*threeMa, *threeMi, stat.threePoints);
+		norm.assists = normalizationCalculation(*assistsMa, *assistsMi, stat.assists);
+		norm.fouls = normalizationCalculation(*foulsMa, *foulsMi, stat.fouls);
+		norm.blocks = normalizationCalculation(*blocksMa, *blocksMi, stat.blocks);
+		norm.gamesPlayed = games;
 	}
 
+	return norm;
 
-	float normalizationCalculation(int max, int min, int val ) {
-
-		return (float)(val-min)/(max-min);
-
-	}
-
-	Statistics statNormalizationCalculation(Statistics stat, int* twoMa, int* threeMa, int* assistsMa, int* foulsMa, int* blocksMa,
-											int* twoMi, int* threeMi, int* assistsMi, int* foulsMi, int* blocksMi) {
-	
-		Statistics norm;
-		int games = stat.gamesPlayed;
-		if (games != 0) {
-			norm.twoPoints = normalizationCalculation(twoMa, twoMi, stat.twoPoints);
-			norm.threePoints = normalizationCalculation(threeMa, threeMi, stat.threePoints);
-			norm.assists = normalizationCalculation(assistsMa, assistsMi, stat.assists);
-			norm.fouls = normalizationCalculation(foulsMa, foulsMi, stat.fouls);
-			norm.blocks = normalizationCalculation(blocksMa, blocksMi, stat.blocks);
-			norm.gamesPlayed = games;
-		}
-		
-
-	}
+}
 

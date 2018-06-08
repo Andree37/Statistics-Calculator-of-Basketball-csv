@@ -13,5 +13,6 @@ void commandLoad(PtList list);
 void commandShow(PtList list);
 void commandClear(PtList list);
 void commandSort(PtList list);
-void avg(PtList list);
+void commandAvg(PtList list);
+void commandNorm(PtList list);
 

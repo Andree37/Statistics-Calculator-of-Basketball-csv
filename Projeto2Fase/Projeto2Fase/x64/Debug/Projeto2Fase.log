@@ -1,51 +1,10 @@
 ﻿  commands.c
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(53): warning C4013: 'toupper' indefinido; assumindo extern retornando int
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(241): warning C4244: 'função': conversão de 'int' para 'float', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(259): warning C4098: 'load': função 'void' retornando um valor
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(227): warning C4244: 'inicializando': conversão de 'double' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(228): warning C4244: 'inicializando': conversão de 'double' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(229): warning C4244: 'inicializando': conversão de 'double' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(230): warning C4244: 'inicializando': conversão de 'double' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(231): warning C4244: 'inicializando': conversão de 'double' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(404): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(405): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(406): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(407): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(408): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(415): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(418): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(421): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(424): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(427): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(440): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(441): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(442): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(443): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(444): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(451): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(454): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(457): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(460): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(463): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(519): warning C4047: 'função': 'int' difere em níveis de indireção de 'int *'
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(519): warning C4024: 'normalizationCalculation': tipos diferentes para parâmetro formal e real 1
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(519): warning C4024: 'normalizationCalculation': tipos diferentes para parâmetro formal e real 2
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(519): warning C4244: 'função': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(520): warning C4047: 'função': 'int' difere em níveis de indireção de 'int *'
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(520): warning C4024: 'normalizationCalculation': tipos diferentes para parâmetro formal e real 1
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(520): warning C4024: 'normalizationCalculation': tipos diferentes para parâmetro formal e real 2
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(520): warning C4244: 'função': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(521): warning C4047: 'função': 'int' difere em níveis de indireção de 'int *'
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(521): warning C4024: 'normalizationCalculation': tipos diferentes para parâmetro formal e real 1
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(521): warning C4024: 'normalizationCalculation': tipos diferentes para parâmetro formal e real 2
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(521): warning C4244: 'função': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(522): warning C4047: 'função': 'int' difere em níveis de indireção de 'int *'
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(522): warning C4024: 'normalizationCalculation': tipos diferentes para parâmetro formal e real 1
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(522): warning C4024: 'normalizationCalculation': tipos diferentes para parâmetro formal e real 2
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(522): warning C4244: 'função': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(523): warning C4047: 'função': 'int' difere em níveis de indireção de 'int *'
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(523): warning C4024: 'normalizationCalculation': tipos diferentes para parâmetro formal e real 1
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(523): warning C4024: 'normalizationCalculation': tipos diferentes para parâmetro formal e real 2
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(523): warning C4244: 'função': conversão de 'float' para 'int', possível perda de dados
-d:\1 ano\2semestre\atad\projeto 2ºfase\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(528): warning C4716: 'statNormalizationCalculation': deve retornar um valor
-  Projeto2Fase.vcxproj -> D:\1 Ano\2semestre\Atad\Projeto 2ºFase\ATAD_2FASE_PROJETO\Projeto2Fase\x64\Debug\Projeto2Fase.exe
+c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(52): warning C4013: 'toupper' undefined; assuming extern returning int
+c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(240): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(258): warning C4098: 'load': 'void' function returning a value
+c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(226): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(227): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(228): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(229): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\andrelaptop\documents\github\atad_2fase_projeto\projeto2fase\projeto2fase\commands.c(230): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  Projeto2Fase.vcxproj -> C:\Users\AndreLaptop\Documents\GitHub\ATAD_2FASE_PROJETO\Projeto2Fase\x64\Debug\Projeto2Fase.exe

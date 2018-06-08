@@ -67,5 +67,5 @@ void statisticsListDestroy(PtStatisticsList list) /* procedimento que liberta o 
 }
 
 void statisticsPrint(Statistics stats) {
-	printf("| %5.2f   |  %5.2f   |  %5.2f   |  %5.2f   |  %5.2f   |  %4d  |", stats.twoPoints, stats.threePoints, stats.assists, stats.fouls, stats.blocks, stats.gamesPlayed);
+	printf("| %5.2f   |  %5.2f   |  %5.2f   |  %5.2f   |  %5.2f   |  %4d  |", stats.twoPoints, stats.threePoints, stats.fouls, stats.assists, stats.blocks, stats.gamesPlayed);
 }
