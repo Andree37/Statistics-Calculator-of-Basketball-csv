@@ -35,3 +35,15 @@ void mvpPlayerListPrint(PtMVPPlayerlist list) {
 		playerPrint(list->elements[i].player);
 	}
 }
+
+void mvpPlayerListDestroy(PtMVPPlayerlist * list)
+{
+	PtMVPPlayerlist curList = (*list);
+
+	if (curList == NULL) return;
+
+	free(curList->elements);
+	free(curList);
+
+	(*list) = NULL;
+}

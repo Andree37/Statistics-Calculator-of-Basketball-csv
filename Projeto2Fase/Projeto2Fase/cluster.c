@@ -1,8 +1,8 @@
 #include "cluster.h"
+#include <stdlib.h>
 
-Cluster createCluster(Statistics stats)
+Cluster clusterCreate(Statistics stats)
 {
-	//PtCluster c = (PtCluster)malloc(sizeof(Cluster));
 	Cluster c;
 	c.meanTwoPoints = stats.twoPoints;
 	c.meanThreePoints = stats.threePoints;
@@ -14,7 +14,7 @@ Cluster createCluster(Statistics stats)
 	return c;
 }
 
-Cluster alterCluster(Cluster cluster, Statistics stats)
+Cluster clusterAlter(Cluster cluster, Statistics stats)
 {
 	Cluster c;
 	
@@ -27,3 +27,32 @@ Cluster alterCluster(Cluster cluster, Statistics stats)
 
 	return c;
 }
+
+PtClusterList clusterListCreate(unsigned int capacity)
+{
+	PtClusterList list = (PtClusterList)malloc(sizeof(ClusterList));
+
+	list->capacity = capacity;
+	list->size = 0;
+	list->elements = (PtCluster)calloc(capacity, sizeof(Cluster));
+
+	return list;
+}
+
+void clusterListAdd(PtClusterList list, Cluster cluster)
+{
+	list->elements[list->size++] = cluster;
+}
+
+void clusterListDestroy(PtClusterList * list)
+{
+	PtClusterList curList = (*list);
+
+	if (curList == NULL) return;
+
+	free(curList->elements);
+	free(curList);
+
+	(*list) = NULL;
+}
+

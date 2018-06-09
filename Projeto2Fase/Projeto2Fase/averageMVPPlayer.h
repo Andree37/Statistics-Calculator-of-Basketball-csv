@@ -19,3 +19,4 @@ typedef  MVPPlayerList *PtMVPPlayerlist;
 PtMVPPlayerlist mvpPlayerListCreate(unsigned int capacity);
 void mvpPLayerListAdd(PtMVPPlayerlist list, AvgMVPPlayer avg);
 void mvpPlayerListPrint(PtMVPPlayerlist list);
+void mvpPlayerListDestroy(PtMVPPlayerlist *list);

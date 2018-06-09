@@ -6,7 +6,7 @@
 #include "commands.h"
 #include "statistics.h"
 #include "cluster.h"
-
+#include "float.h"
 
 void load(char *playerFile, char *statsFile, PtList list);
 void show(PtList list);
@@ -32,10 +32,11 @@ void segmentPlayers(PtList players, PtList allStar, PtList shootingGuard, PtList
 Statistics averageAllStats(PtList list);
 
 
-PtCluster kmeans(PtList list, int k, int maxIteration, float deltaError);
-void calculateClosestsClusters(PtList list, Cluster *clusters, int k);
+PtCluster kmeans(PtList list, int k, int maxIteration, float deltaError, float *iterationError);
+void calculateClosestsClusters(PtList list, PtClusterList clusters, int k);
 float calculateDistance(Cluster cluster, Statistics stat);
-void calculateCentroids(Cluster *clusters, int k);
+void calculateCentroids(PtClusterList clusters, int k); 
+float calculateError(PtClusterList clusters, int k);
 
 
 
@@ -201,7 +202,6 @@ void calculateMin(PtList list, float* two, float* three, float* assists, float* 
 
 PtList normalizeStatistics(PtList players) {
 
-	//matrizzzzzzzzzzzzzz???????????
 	float twoMax, twoMin;
 	float threeMax, threeMin;
 	float assistsMax, assistsMin;
@@ -217,6 +217,7 @@ PtList normalizeStatistics(PtList players) {
 
 
 	Player player;
+	Player avgPlayer;
 	PtList normList = listCreate(size);
 	Statistics normStats;
 	Statistics stats;
@@ -229,7 +230,7 @@ PtList normalizeStatistics(PtList players) {
 				stats = statNormalizationCalculation(player.statistics, &twoMax, &threeMax, &assistsMax, &foulsMax, &blocksMax,
 					&twoMin, &threeMin, &assistsMin, &foulsMin, &blocksMin);
 				normStats = statisticsAdd(statisticsCreateZeros(), stats, player.statistics.gamesPlayed);
-				Player avgPlayer = playerCreate(player.id, player.name, player.team, player.birthDate, player.gender, normStats);
+				avgPlayer = playerCreate(player.id, player.name, player.team, player.birthDate, player.gender, normStats);
 				listAdd(normList, index++, avgPlayer);
 			}
 		}
@@ -637,6 +638,7 @@ void avg(PtList list) {
 		show(clone);
 
 		listDestroy(&clone);
+		mvpPlayerListDestroy(&avgMVPList);
 	}
 }
 
@@ -729,7 +731,7 @@ void checkType(PtList list) {
 		gets_s(toInteger, sizeof(toInteger));
 		intTemp = atoi(toInteger);
 
-		if((intTemp > size || mapContains(map, intTemp) == 0) && intTemp > 0) {
+		if((mapContains(map, intTemp) == 0) && intTemp > 0) {
 			printf("Valor de chave nao encontrado");
 		}
 		else if(intTemp > 0){
@@ -752,139 +754,176 @@ void checkType(PtList list) {
 	mapDestroy(&map);
 }
 
-
 void cluster(PtList list){
 
-	PtList norm = normalizeStatistics(list);
+	PtList toNormList = averageStatistics(list);
+
+	PtList norm = normalizeStatistics(toNormList);
+
 	char command[25];
 	int k;
 	int maxIteration;
 	float deltaError;
-	Cluster* clusters;
-	
+	PtClusterList clusters;
+	PtClusterList bestCluster;
 	
 
 
 	printf("Quantos cluster quer usar?");
-	scanf_s("%d", &k);
+	gets_s(command, sizeof(command));
+	k = atoi(command);
 	printf("Quantas iteracoes quer efetuar");
-	scanf_s("%d", &maxIteration);
+	gets_s(command, sizeof(command));
+	maxIteration = atoi(command);
 	printf("Qual a varicao minima do erro entre iteracoes");
-	scanf_s("%f", &deltaError);
+	gets_s(command, sizeof(command));
+	deltaError = atoi(command);
 	
+	float iterationError;
+	float bestError = FLT_MAX;
 
-	clusters = kmeans(norm, k, maxIteration, deltaError);
+	int repetitionMax = 100;
 
-	for (int i = 0; i < k; i++) {
-		printf("Cluster %d ----", i);
-		listPrint(clusters[i].members);
+
+	for (int i = 0; i < repetitionMax; i++) {
+		clusters = kmeans(norm, k, maxIteration, deltaError, &iterationError);
+		if (iterationError < bestError) {
+			bestError = iterationError;
+			bestCluster = clusters;
+		}
 	}
+	
+	printf("Best error=%.2f\n", bestError);
+	for (int i = 0; i < k; i++) {
+		printf("Cluster %d ----", i+1);
+		listPrint(bestCluster->elements[i].members);
+	}
+
+	listDestroy(&toNormList);
+	listDestroy(&norm);
+
+	//destroy cluster lists
 	
 }
 
-
-PtCluster kmeans(PtList list, int k, int maxIteration, float deltaError) {
+PtCluster kmeans(PtList list, int k, int maxIteration, float deltaError, float *iterationError) {
 	//kmeans
-	Cluster *clusters = (Cluster*)malloc(k * sizeof(Cluster));
+	PtClusterList clusters = clusterListCreate(600);
 	Player p;
 	Statistics stat;
-	int rand=0;
+	int size;
+	listSize(list, &size);
+	int random;
+	Cluster toAdd;
+
 	for (int i = 0; i < k; i++) {
 		////buscar umas stats de um jogador random
-		listGet(list, rand ,&p);
+		random = (rand() % size);
+		listGet(list, random ,&p);
 		stat = p.statistics;
-		clusters[i] = createCluster(stat);
+		toAdd = clusterCreate(stat);
+		clusterListAdd(clusters, toAdd);
 	}
 
-	int iterationNumber = 0;
-	float prevError;
-	float iterationError;
+	int iterationNumber = 1;
+	float prevError = FLT_MAX;
+	*iterationError = FLT_MAX;
 
 	do {
 		if (iterationNumber > 1)
-			prevError = iterationError;
+			prevError = *iterationError;
 
 		//Atribuir 
-		calculateClosestsClusters(list, &clusters,  k);
+		calculateClosestsClusters(list, clusters,  k);
 		//Reclacular os centroides
 		calculateCentroids(clusters, k, &stat);
 		//Calcular o erro
-		iterationError=calculateError(&cluster, k);
-
+		*iterationError=calculateError(clusters, k);
 
 		iterationNumber++;
-	} while ((iterationNumber < maxIteration) && (abs(prevError - iterationError) > deltaError));
+	} while ((iterationNumber < maxIteration) && (fabs(prevError - *iterationError) > deltaError));
 
 	return clusters;
 }
-void calculateClosestsClusters(PtList list, Cluster *clusters, int k) {
+
+void calculateClosestsClusters(PtList list, PtClusterList clusters, int k) {
 	int sizeList;
 	int sizeCluster;
-	int distance;
-	int closestDistance;
+	float distance;
+	float closestDistance;
 	int closestCluster;
-	//distance = (int*)malloc(k*sizeof(int));
-	//clusters[1];
 	Player player;
 	Statistics stat;
 	
+	for (int i = 0; i < k; i++) {
+		listClear(clusters->elements[i].members);
+	}
 	
 	listSize(list, &sizeList);
 	for (int i = 0; i < sizeList; i++) {
 		listGet(list, i, &player);
 		stat = player.statistics;
 		for (int j = 0; j < k; j++) {
-			distance =calculateDistance(clusters[j], stat);
+			distance =calculateDistance(clusters->elements[j], stat);
 			if (j== 0||distance < closestDistance) {
 				closestCluster = j;
 				closestDistance = distance;
 			}
 		}
-		listSize(clusters[closestCluster].members, &sizeCluster);
-		listAdd(clusters[closestCluster].members, sizeCluster, player);
+		listSize(clusters->elements[closestCluster].members, &sizeCluster);
+		listAdd(clusters->elements[closestCluster].members, sizeCluster, player);
 		
 	}
 
 }
 
 float calculateDistance(Cluster cluster, Statistics stat){
-	float ass = pow((cluster.meanAssists - stat.assists),2);
-	float two = pow((cluster.meanTwoPoints - stat.twoPoints),2);
-	float three = pow((cluster.meanThreePoints-stat.threePoints),2);
-	float fouls = pow((cluster.meanFouls-stat.fouls),2);
-	float blocks = pow((cluster.meanBlocks-stat.blocks),2);
+	float clustAssists = cluster.meanAssists - stat.assists;
+	float clustTwoPoints = cluster.meanTwoPoints - stat.twoPoints;
+	float clustThreePoints = cluster.meanThreePoints - stat.threePoints;
+	float clustFouls = cluster.meanFouls - stat.fouls;
+	float clustBlocks = cluster.meanBlocks - stat.blocks;
+
+	float ass = pow((clustAssists),2.0);
+	float two = pow((clustTwoPoints),2.0);
+	float three = pow((clustThreePoints),2.0);
+	float fouls = pow((clustFouls),2.0);
+	float blocks = pow((clustBlocks),2.0);
 
 
 	return sqrt(ass+two+three+fouls+blocks);
 }
 
-void calculateCentroids(Cluster *clusters, int k){ 
+void calculateCentroids(PtClusterList clusters, int k){ 
 	Statistics stat;
+	Statistics avgStats;
 	
 	for (int i = 0; i < k; i++) {
-		averageAllStats(clusters[i].members, &stat);
-		clusters[i] = alterCluster(clusters[i],  stat);
+		avgStats = averageAllStats(clusters->elements[i].members);
+		clusters->elements[i] = clusterAlter(clusters->elements[i],  avgStats);
 
 	}
 
 }
 
 
-int calculateError(Cluster *cluster, int k) {
+float calculateError(PtClusterList clusters, int k) {
 	int size;
 	float total = 0;
-	PtPlayer p;
+	float distance;
+	Player p;
 	Statistics s;
 	PtList l;
+
 	for (int i = 0; i < k; i++) {
-		l = cluster[i].members;
+		l = clusters->elements[i].members;
 		listSize(l, &size);
 		for (int j = 0; j < size; j++) {
 			listGet(l, j, &p);
-			s = p->statistics;
-			total += pow(calculateDistance(cluster[i], s),2);
+			s = p.statistics;
+			distance = calculateDistance(clusters->elements[i],s);
+			total += pow(distance,2.0);
 		}
-
 	}
 	return total;
 }

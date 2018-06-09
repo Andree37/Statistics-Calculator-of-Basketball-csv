@@ -13,6 +13,18 @@ typedef struct cluster {
 
 typedef struct Cluster *PtCluster;
 
-Cluster createCluster(Statistics stats);
-Cluster alterCluster(Cluster cluster, Statistics stats);
+Cluster clusterCreate(Statistics stats);
+Cluster clusterAlter(Cluster cluster, Statistics stats);
 	
+
+typedef struct clusterList {
+	Cluster *elements;
+	unsigned int size;
+	unsigned int capacity;
+}ClusterList;
+
+typedef ClusterList* PtClusterList;
+
+PtClusterList clusterListCreate(unsigned int capacity);
+void clusterListAdd(PtClusterList list, Cluster cluster);
+void clusterListDestroy(PtClusterList *list);
