@@ -1,9 +1,10 @@
 #pragma once
+#include "playerType.h"
 
 /* definicao do tipo da chave */
 typedef int MapKey;
 /* definicao do tipo do valor*/
-typedef int MapValue;
+typedef PlayerType MapValue;
 
 void mapKeyPrint(MapKey key);
 void mapValuePrint(MapValue value);

@@ -1,34 +1,33 @@
-#include "commands.h"
-#include "statistics.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <String.h>
 #include "averageMVPPlayer.h"
+#include "commands.h"
+#include "statistics.h"
 
-
-void commandNorm(PtList list);
-void commandAvg(PtList list);
-
-char** split(char *str, int nFields, const char *delim);
 void load(char *playerFile, char *statsFile, PtList list);
 void show(PtList list);
 void clear(PtList list);
 void sort(PtList list);
 void avg(PtList list);
+void type(PtList list);
+void norm(PtList list);
+void checkType(PtList list);
+
+char** split(char *str, int nFields, const char *delim);
 PtList createClone(PtList list);
 Statistics averageCalculation(Statistics stat);
 PtList averageStatistics(PtList players);
-
 void calculateMax(PtList list, float* two, float* three, float* assists, float* fouls, float* blocks);
 void calculateMin(PtList list, float* two, float* three, float* assists, float* fouls, float* blocks);
 float normalizationCalculation(float max, float min, float val);
 Statistics statNormalizationCalculation(Statistics stat, float* twoMa, float* threeMa, float* assistsMa, float* foulsMa, float* blocksMa,
 	float* twoMi, float* threeMi, float* assistsMi, float* foulsMi, float* blocksMi);
-void norm(PtList list);
 PtList normalizeStatistics(PtList players);
-
-
+void segmentPlayers(PtList players, PtList allStar, PtList shootingGuard, PtList pointGuard, Statistics media);
 Statistics averageAllStats(PtList list);
+
+
 
 char** split(char *str, int nFields, const char *delim) {
 
@@ -116,304 +115,6 @@ Statistics averageCalculation(Statistics stat) {
 	}
 
 	return avg;
-}
-
-void commandLoad(PtList list) {
-	if (list != NULL) {
-		char commandP[21];
-
-		char commandS[21];
-
-
-		printf("Introduza o ficheiro dos jogadores: ");
-		gets_s(commandP, sizeof(commandP));
-		printf("Introduza o ficheiro dos jogos: ");
-		gets_s(commandS, sizeof(commandS));
-		printf("\n");
-
-		if (strstr(commandP, "players") != 0 && strstr(commandS, "games") != 0) {
-			load(commandP, commandS, list);
-		}
-		else {
-			printf("A introducao dos nomes dos ficheiros esta errada.\n");
-		}
-	}
-	else {
-		printf("Erro interno, nao existe uma lista para suportar este comando");
-	}
-}
-
-void commandShow(PtList list) {
-	if (list != NULL) {
-		show(list);
-	}
-	else {
-		printf("Erro interno, nao existe uma lista para suportar este comando");
-	}
-}
-
-void commandClear(PtList list) {
-	if (list != NULL) {
-		clear(list);
-	}
-	else {
-		printf("Erro interno, nao existe uma lista para suportar este comando");
-	}
-}
-
-void commandSort(PtList list) {
-	if (list != NULL) {
-		sort(list);
-	}
-	else {
-		printf("Erro interno, nao existe uma lista para suportar este comando");
-	}
-}
-
-void commandAvg(PtList list) {
-	if (list != NULL) {
-		avg(list);
-	}
-	else {
-		printf("Erro interno, nao existe uma lista para suportar este comando");
-	}
-}
-
-void commandNorm(PtList list) {
-	if (list != NULL) {
-		norm(list);
-	}
-	else {
-		printf("Erro interno, nao existe uma lista para suportar este comando");
-	}
-}
-
-void load(char *playerFile, char *statsFile, PtList list) {
-	FILE *fd;
-	FILE *fd2;
-	int err = fopen_s(&fd, statsFile, "r");
-	int err2 = fopen_s(&fd2, playerFile, "r");
-
-	if (err != 0) {
-		printf("Nao foi possivel abrir o ficheiro %s ...\n", statsFile);
-		return;
-	}
-	if (err2 != 0) {
-		printf("Nao foi possivel abrir o ficheiro %s ...\n", playerFile);
-		return;
-	}
-
-	char nextline[1024];
-
-	int countPlayers = 0;
-	int countGames = 0;
-
-	while (fgets(nextline, sizeof(nextline), fd2)) {
-		if (strlen(nextline) < 1)
-			continue;
-
-		char **tokens = split(nextline, 5, ";");
-
-		int playerId = atoi(tokens[0]);
-		char* name = tokens[1];
-
-		char* team = tokens[2];
-
-		int day, month, year;
-		sscanf_s(tokens[3], "%d/%d/%d", &day, &month, &year);
-
-		char gender = tokens[4][0];
-
-		Date date = dateCreate(day, month, year);
-
-		Statistics stat = statisticsCreateZeros();
-
-		Player player = playerCreate(playerId, name, team, date, gender, stat);
-
-		listAdd(list, countPlayers, player);
-
-		countPlayers++;
-
-		free(tokens);
-
-	}
-
-	fclose(fd2);
-
-	while (fgets(nextline, sizeof(nextline), fd)) {
-		if (strlen(nextline) < 1)
-			continue;
-
-		char **tokens = split(nextline, 7, ";");
-
-		int playerId = atoi(tokens[0]);
-		int idGame = atoi(tokens[1]);//nao faz nada de momento
-		int two = atof(tokens[2]);
-		int three = atof(tokens[3]);
-		int assists = atof(tokens[4]);
-		int fouls = atof(tokens[5]);
-		int blocks = atof(tokens[6]);
-
-		Player player;
-
-		int size;
-		listSize(list, &size);
-
-		for (int i = 0; i < size; i++) {
-			listGet(list, i, &player);
-			if (player.id == playerId) {
-				Statistics stats = statisticsCreate(two, three, fouls, assists, blocks);
-				Statistics newStats;
-				newStats = statisticsAdd(player.statistics, stats, 0);
-				Player newPlayer = playerCreate(player.id, player.name, player.team, player.birthDate, player.gender, newStats);
-				listSet(list, i, newPlayer, &player);
-			}
-		}
-
-		free(tokens);
-		countGames++;
-
-
-	}
-	printf("\n\nForam lidos %d jogadores... \n", countPlayers);
-	printf("\nForam lidos %d estatisticas... \n", countGames);
-
-	fclose(fd);
-
-	return list;
-}
-
-void show(PtList list) {
-	int size;
-	listSize(list, &size);
-	ListElem elem;
-
-	if (size == 0) {
-		printf("Nao existe nenhum registo na tabela");
-		return;
-	}
-	printf("           Jogador   ID : NOME                | EQUIPA          | BIRTHDATE  |GENRE| 2POINTS |  3POINTS |  FOULS   | ASSISTS  |BLOCKS    | GAMES  |\n");
-	listPrint(list); //podemos mudar o arraylist.c para ficar com boa apresentacao?
-}
-
-void clear(PtList list) {
-	listClear(list);
-	printf("Lista limpa");
-}
-
-void sort(PtList list) {
-	int changed = 1;
-
-	ListElem elem;
-	ListElem elem2;
-
-	char* name = "NOME";
-	char* date = "DATA";
-	char* games = "JOGOS";
-	char option[10];
-
-	PtList clone = createClone(list);
-
-	int size;
-	listSize(clone, &size);
-
-	if (clone != NULL) {
-
-
-
-
-		printf("Escolha a maneira de ordenacao\n\n");
-		printf("Nome - para a ordenacao pelo nome\n");
-		printf("Data - para a ordenacao pela Data de nascimento\n");
-		printf("Jogos - para a ordenacao pelos numeros de jogos jogados\n");
-
-		gets_s(option, sizeof(option));
-
-
-		for (int i = 0; i < size - 1; i++) {
-			for (int j = 0; j < size - i - 1; j++) {
-				listGet(clone, j, &elem);
-				listGet(clone, j + 1, &elem2);
-				if ((equalsStringIgnoreCase(option, name) != 0)) {
-					if (strcmp(elem.name, elem2.name) > 0) {
-						listSet(clone, j, elem2, &elem);
-						listSet(clone, j + 1, elem, &elem2);
-					}
-				}
-				else if ((equalsStringIgnoreCase(option, date) != 0)) {
-					if (isYoungerThan(elem.birthDate, elem2.birthDate)) {
-						listSet(clone, j, elem2, &elem);
-						listSet(clone, j + 1, elem, &elem2);
-					}
-				}
-				else if ((equalsStringIgnoreCase(option, games) != 0)) {
-					if (elem.statistics.gamesPlayed > elem2.statistics.gamesPlayed) {
-						listSet(clone, j, elem2, &elem);
-						listSet(clone, j + 1, elem, &elem2);
-					}
-				}
-				else {
-					changed = 0;
-				}
-			}
-		}
-		if (changed)
-			listPrint(clone);
-		else {
-			printf("Input invalido. Por favor insira Nome, Jogos ou Data.");
-		}
-	}
-	else {
-		printf("Lista sem registos\n");
-	}
-	listDestroy(&clone);
-}
-
-void avg(PtList list) {
-	PtList avgList = averageStatistics(list);
-	Player player;
-	Statistics avgStats;
-	float avgMVP;
-	int size;
-	listSize(avgList, &size);
-
-	PtMVPPlayerlist avgMVPList = mvpPlayerListCreate(size);
-	AvgMVPPlayer playerAVG;
-
-	if (size > 0) {
-		for (int i = 0; i < size; i++) {
-			listGet(avgList, i, &player);
-			avgStats = player.statistics;
-			avgMVP = 3 * avgStats.threePoints + 2 * avgStats.twoPoints + avgStats.assists + 2 * avgStats.blocks - (3 * avgStats.fouls);
-			playerAVG = avgMVPPlayerCreate(player, avgMVP);
-			mvpPLayerListAdd(avgMVPList, playerAVG);
-		}
-
-		for (int i = 0; i < size - 1; i++) {
-			for (int j = 0; j < size - i - 1; j++) {
-				if (avgMVPList->elements[j].avgMVP < avgMVPList->elements[j + 1].avgMVP) {
-					AvgMVPPlayer aux = avgMVPList->elements[j];
-					avgMVPList->elements[j] = avgMVPList->elements[j + 1];
-					avgMVPList->elements[j + 1] = aux;
-				}
-			}
-		}
-		printf("Jogador  ID |         Nome         |   Equipa        |    Data    |Sexo |2Points  | 3Points  | Assists  | Fouls    | Blocks   | Games  |\n");
-
-		mvpPlayerListPrint(avgMVPList);
-	}
-}
-
-void norm(PtList list) {
-
-	PtList toNormList = averageStatistics(list);
-
-	PtList normalizedList = normalizeStatistics(toNormList);
-
-	listPrint(normalizedList);
-
-	listDestroy(&toNormList);
-	listDestroy(&normalizedList);
 }
 
 void calculateMax(PtList list, float* two, float* three, float* assists, float* fouls, float* blocks) {
@@ -550,42 +251,493 @@ Statistics statNormalizationCalculation(Statistics stat, float* twoMa, float* th
 
 }
 
-void type(PtList list) {
-
-	Statistics media= averageAllStats(list);
-	float twoPoints;
-	float threePoints;	
-	float assists;		
-	float fouls;		
-	float blocks;
-
-
-
-
-	PtList allStar;
-	PtList shootingGuard;
-	PtList pointGuard;
-
-}
-
 Statistics averageAllStats(PtList list) {
 	Statistics avg = statisticsCreateZeros();
 	Statistics aux;
 	Player auxP;
 	int size;
 
-	listSize(list,&size);
+	listSize(list, &size);
 	for (int i = 0; i < size; i++) {
 		listGet(list, i, &auxP);
 		aux = auxP.statistics;
-		statisticsAdd(avg, aux, 0);
+		avg = statisticsAdd(avg, aux, 0);
 	}
-	aux.assists = aux.assists / size;
-	aux.blocks = aux.blocks / size;
-	aux.fouls = aux.fouls / size;
-	aux.threePoints = aux.threePoints / size;
-	aux.twoPoints = aux.twoPoints / size;
+	avg.assists = avg.assists / size;
+	avg.blocks = avg.blocks / size;
+	avg.fouls = avg.fouls / size;
+	avg.threePoints = avg.threePoints / size;
+	avg.twoPoints = avg.twoPoints / size;
 
 
-	return aux;
+	return avg;
+}
+
+void segmentPlayers(PtList players, PtList allStar, PtList shootingGuard, PtList pointGuard, Statistics media) {
+	int size;
+	int innerSize;
+	listSize(players, &size);
+	ListElem elem;
+
+	float twoPoints;
+	float threePoints;
+	float assists;
+	float blocks;
+
+	for (int i = 0; i < size; i++) {
+		listGet(players, i, &elem);
+		twoPoints = elem.statistics.twoPoints;
+		threePoints = elem.statistics.threePoints;
+		assists = elem.statistics.assists;
+		blocks = elem.statistics.blocks;
+
+		if (twoPoints > media.twoPoints && threePoints > media.threePoints && assists > media.assists && blocks > media.blocks) {
+			listSize(allStar, &innerSize);
+			listAdd(allStar, innerSize, elem);
+		}
+		else if (twoPoints > media.twoPoints && threePoints > media.threePoints && assists < media.assists && blocks < media.blocks) {
+			listSize(shootingGuard, &innerSize);
+			listAdd(shootingGuard, innerSize, elem);
+		}
+		else if (twoPoints < media.twoPoints && threePoints < media.threePoints && assists > media.assists && blocks > media.blocks) {
+			listSize(pointGuard, &innerSize);
+			listAdd(pointGuard, innerSize, elem);
+		}
+	}
+}
+
+void commandLoad(PtList list) {
+	if (list != NULL) {
+		char commandP[21];
+		char commandS[21];
+
+
+		printf("Introduza o ficheiro dos jogadores: ");
+		gets_s(commandP, sizeof(commandP));
+		printf("Introduza o ficheiro dos jogos: ");
+		gets_s(commandS, sizeof(commandS));
+		printf("\n");
+
+		if (strstr(commandP, "players") != 0 && strstr(commandS, "games") != 0) {
+			load(commandP, commandS, list);
+		}
+		else {
+			printf("A introducao dos nomes dos ficheiros esta errada.\n");
+		}
+	}
+	else {
+		printf("Erro interno, nao existe uma lista para suportar este comando");
+	}
+}
+
+void commandShow(PtList list) {
+	if (list != NULL) {
+		show(list);
+	}
+	else {
+		printf("Erro interno, nao existe uma lista para suportar este comando");
+	}
+}
+
+void commandClear(PtList list) {
+	if (list != NULL) {
+		clear(list);
+	}
+	else {
+		printf("Erro interno, nao existe uma lista para suportar este comando");
+	}
+}
+
+void commandSort(PtList list) {
+	if (list != NULL) {
+		sort(list);
+	}
+	else {
+		printf("Erro interno, nao existe uma lista para suportar este comando");
+	}
+}
+
+void commandAvg(PtList list) {
+	if (list != NULL) {
+		avg(list);
+	}
+	else {
+		printf("Erro interno, nao existe uma lista para suportar este comando");
+	}
+}
+
+void commandNorm(PtList list) {
+	if (list != NULL) {
+		norm(list);
+	}
+	else {
+		printf("Erro interno, nao existe uma lista para suportar este comando");
+	}
+}
+
+void commandType(PtList list) {
+	if (list != NULL) {
+		type(list);
+	}
+	else {
+		printf("Erro interno, nao existe uma lista para suportar este comando");
+	}
+}
+
+void commandCheckType(PtList list) {
+	if (list != NULL) {
+		checkType(list);
+	}
+	else {
+		printf("Erro interno, nao existe uma lista para suportar este comando");
+	}
+}
+
+void load(char *playerFile, char *statsFile, PtList list) {
+	FILE *fd;
+	FILE *fd2;
+	int err = fopen_s(&fd, statsFile, "r");
+	int err2 = fopen_s(&fd2, playerFile, "r");
+
+	if (err != 0) {
+		printf("Nao foi possivel abrir o ficheiro %s ...\n", statsFile);
+		return;
+	}
+	if (err2 != 0) {
+		printf("Nao foi possivel abrir o ficheiro %s ...\n", playerFile);
+		return;
+	}
+
+	char nextline[1024];
+
+	int countPlayers = 0;
+	int countGames = 0;
+
+	while (fgets(nextline, sizeof(nextline), fd2)) {
+		if (strlen(nextline) < 1)
+			continue;
+
+		char **tokens = split(nextline, 5, ";");
+
+		int playerId = atoi(tokens[0]);
+		char* name = tokens[1];
+
+		char* team = tokens[2];
+
+		int day, month, year;
+		sscanf_s(tokens[3], "%d/%d/%d", &day, &month, &year);
+
+		char gender = tokens[4][0];
+
+		Date date = dateCreate(day, month, year);
+
+		Statistics stat = statisticsCreateZeros();
+
+		Player player = playerCreate(playerId, name, team, date, gender, stat);
+
+		listAdd(list, countPlayers, player);
+
+		countPlayers++;
+
+		free(tokens);
+
+	}
+
+	fclose(fd2);
+
+	while (fgets(nextline, sizeof(nextline), fd)) {
+		if (strlen(nextline) < 1)
+			continue;
+
+		char **tokens = split(nextline, 7, ";");
+
+		int playerId = atoi(tokens[0]);
+		int idGame = atoi(tokens[1]);//nao faz nada de momento
+		int two = atof(tokens[2]);
+		int three = atof(tokens[3]);
+		int assists = atof(tokens[4]);
+		int fouls = atof(tokens[5]);
+		int blocks = atof(tokens[6]);
+
+		Player player;
+
+		int size;
+		listSize(list, &size);
+
+		for (int i = 0; i < size; i++) {
+			listGet(list, i, &player);
+			if (player.id == playerId) {
+				Statistics stats = statisticsCreate(two, three, assists, fouls, blocks);
+				Statistics newStats;
+				newStats = statisticsAdd(player.statistics, stats, 0);
+				Player newPlayer = playerCreate(player.id, player.name, player.team, player.birthDate, player.gender, newStats);
+				listSet(list, i, newPlayer, &player);
+			}
+		}
+
+		free(tokens);
+		countGames++;
+
+
+	}
+	printf("\n\nForam lidos %d jogadores... \n", countPlayers);
+	printf("\nForam lidos %d estatisticas... \n", countGames);
+
+	fclose(fd);
+
+	return list;
+}
+
+void show(PtList list) {
+	int size;
+	listSize(list, &size);
+
+	if (size == 0) {
+		printf("Nao existe nenhum registo na tabela");
+		return;
+	}
+	printf("           Jogador   ID : NOME                | EQUIPA          | BIRTHDATE  |GENRE| 2POINTS |  3POINTS |  FOULS   | ASSISTS  |BLOCKS    | GAMES  |\n");
+	listPrint(list);
+}
+
+void clear(PtList list) {
+	listClear(list);
+	printf("Lista limpa");
+}
+
+void sort(PtList list) {
+	int changed = 1;
+
+	ListElem elem;
+	ListElem elem2;
+
+	char* name = "NOME";
+	char* date = "DATA";
+	char* games = "JOGOS";
+	char option[10];
+
+	PtList clone = createClone(list);
+
+	int size;
+	listSize(clone, &size);
+
+	if (clone != NULL) {
+
+
+
+
+		printf("Escolha a maneira de ordenacao\n\n");
+		printf("Nome - para a ordenacao pelo nome\n");
+		printf("Data - para a ordenacao pela Data de nascimento\n");
+		printf("Jogos - para a ordenacao pelos numeros de jogos jogados\n");
+
+		gets_s(option, sizeof(option));
+
+
+		for (int i = 0; i < size - 1; i++) {
+			for (int j = 0; j < size - i - 1; j++) {
+				listGet(clone, j, &elem);
+				listGet(clone, j + 1, &elem2);
+				if ((equalsStringIgnoreCase(option, name) != 0)) {
+					if (strcmp(elem.name, elem2.name) > 0) {
+						listSet(clone, j, elem2, &elem);
+						listSet(clone, j + 1, elem, &elem2);
+					}
+				}
+				else if ((equalsStringIgnoreCase(option, date) != 0)) {
+					if (isYoungerThan(elem.birthDate, elem2.birthDate)) {
+						listSet(clone, j, elem2, &elem);
+						listSet(clone, j + 1, elem, &elem2);
+					}
+					if (isSameAge(elem.birthDate, elem2.birthDate) != 0) {
+						if (strcmp(elem.name, elem2.name) > 0) {
+							listSet(clone, j, elem2, &elem);
+							listSet(clone, j + 1, elem, &elem2);
+						}
+					}
+
+				}
+				else if ((equalsStringIgnoreCase(option, games) != 0)) {
+					if (elem.statistics.gamesPlayed > elem2.statistics.gamesPlayed) {
+						listSet(clone, j, elem2, &elem);
+						listSet(clone, j + 1, elem, &elem2);
+					}
+					if (elem.statistics.gamesPlayed == elem2.statistics.gamesPlayed) {
+						if (strcmp(elem.name, elem2.name) > 0) {
+							listSet(clone, j, elem2, &elem);
+							listSet(clone, j + 1, elem, &elem2);
+						}
+					}
+				}
+				else {
+					changed = 0;
+				}
+			}
+		}
+		if (changed)
+			show(clone);
+		else {
+			printf("Input invalido. Por favor insira Nome, Jogos ou Data.");
+		}
+	}
+	else {
+		printf("Lista sem registos\n");
+	}
+	listDestroy(&clone);
+}
+
+void avg(PtList list) {
+	PtList avgList = averageStatistics(list);
+	Player player;
+	Statistics avgStats;
+	float avgMVP;
+	int size;
+	listSize(avgList, &size);
+
+	PtMVPPlayerlist avgMVPList = mvpPlayerListCreate(size);
+	AvgMVPPlayer playerAVG;
+
+	if (size > 0) {
+		for (int i = 0; i < size; i++) {
+			listGet(avgList, i, &player);
+			avgStats = player.statistics;
+			avgMVP = 3 * avgStats.threePoints + 2 * avgStats.twoPoints + avgStats.assists + 2 * avgStats.blocks - (3 * avgStats.fouls);
+			playerAVG = avgMVPPlayerCreate(player, avgMVP);
+			mvpPLayerListAdd(avgMVPList, playerAVG);
+		}
+
+		for (int i = 0; i < size - 1; i++) {
+			for (int j = 0; j < size - i - 1; j++) {
+				if (avgMVPList->elements[j].avgMVP < avgMVPList->elements[j + 1].avgMVP) {
+					AvgMVPPlayer aux = avgMVPList->elements[j];
+					avgMVPList->elements[j] = avgMVPList->elements[j + 1];
+					avgMVPList->elements[j + 1] = aux;
+				}
+			}
+		}
+
+		PtList clone = listCreate(size);
+		ListElem elem;
+
+		for (int i = 0; i < size; i++) {
+			elem = avgMVPList->elements[i].player;
+			listAdd(clone, i, elem);
+		}
+
+		show(clone);
+
+		listDestroy(&clone);
+	}
+}
+
+void norm(PtList list) {
+
+	PtList toNormList = averageStatistics(list);
+
+	PtList normalizedList = normalizeStatistics(toNormList);
+
+	show(normalizedList);
+
+	listDestroy(&toNormList);
+	listDestroy(&normalizedList);
+}
+
+void type(PtList list) {
+
+	PtList avgList = averageStatistics(list);
+	Statistics media = averageAllStats(avgList);
+
+	PtList allStar = listCreate(300);
+	PtList shootingGuard = listCreate(300);
+	PtList pointGuard = listCreate(300);
+
+	segmentPlayers(avgList, allStar, shootingGuard, pointGuard, media);
+
+	printf("Tipo Shooting-Guard\n");
+	listPrint(shootingGuard);
+	printf("Tipo Point-Guard\n");
+	listPrint(pointGuard);
+	printf("Tipo All-Star\n");
+	listPrint(allStar);
+
+	listDestroy(&avgList);
+	listDestroy(&allStar);
+	listDestroy(&shootingGuard);
+	listDestroy(&pointGuard);
+}
+
+void checkType(PtList list) {
+
+	PtList avgList = averageStatistics(list);
+	Statistics media = averageAllStats(avgList);
+
+	PtList allStar = listCreate(300);
+	PtList shootingGuard = listCreate(300);
+	PtList pointGuard = listCreate(300);
+
+	segmentPlayers(avgList, allStar, shootingGuard, pointGuard, media);
+
+	PtMap map = mapCreate(300); //maximo de jogadores
+	PlayerType pType;
+
+	ListElem lElem;
+
+	int size;
+	listSize(allStar, &size);
+	
+	for (int i = 0; i < size; i++) {
+		listGet(allStar, i, &lElem);
+		pType = playerTypeCreate("all-star", lElem.statistics.twoPoints, media.twoPoints, lElem.statistics.threePoints, media.threePoints,
+			lElem.statistics.blocks, media.blocks, lElem.statistics.assists, media.assists, lElem.statistics.fouls, media.fouls);
+		mapPut(map, lElem.id, pType);
+	}
+
+	listSize(shootingGuard, &size);
+
+	for (int i = 0; i < size; i++) {
+		listGet(shootingGuard, i, &lElem);
+		pType = playerTypeCreate("shooting-guard", lElem.statistics.twoPoints, media.twoPoints, lElem.statistics.threePoints, media.threePoints,
+			lElem.statistics.blocks, media.blocks, lElem.statistics.assists, media.assists, lElem.statistics.fouls, media.fouls);
+		mapPut(map, lElem.id, pType);
+	}
+
+	listSize(pointGuard, &size);
+
+	for (int i = 0; i < size; i++) {
+		listGet(pointGuard, i, &lElem);
+		pType = playerTypeCreate("point-guard", lElem.statistics.twoPoints, media.twoPoints, lElem.statistics.threePoints, media.threePoints,
+			lElem.statistics.blocks, media.blocks, lElem.statistics.assists, media.assists, lElem.statistics.fouls, media.fouls);
+		mapPut(map, lElem.id, pType);
+	}
+
+	int intTemp;
+	char toInteger[5];
+	MapValue value;
+	mapSize(map, &size);
+	do {
+		printf("Introduza uma chave(ID de jogador) para saber informacoes sobre ele ------ Introduza um valor negativo para sair\n");
+		gets_s(toInteger, sizeof(toInteger));
+		intTemp = atoi(toInteger);
+
+		if((intTemp > size || mapContains(map, intTemp) == 0) && intTemp > 0) {
+			printf("Valor de chave nao encontrado");
+		}
+		else if(intTemp > 0){
+			mapGet(map, intTemp, &value);
+
+			printf("Key =");
+			mapKeyPrint(intTemp);
+			mapValuePrint(value);
+		}
+		printf("\n\n\n");
+
+	} while (intTemp > -1); \
+
+		printf("Byee\n");
+
+	listDestroy(&avgList);
+	listDestroy(&allStar);
+	listDestroy(&shootingGuard);
+	listDestroy(&pointGuard);
+	mapDestroy(&map);
 }

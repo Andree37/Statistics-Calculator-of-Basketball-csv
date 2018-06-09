@@ -70,11 +70,11 @@ int main(int argc, char** argv) {
 
 		}
 		else if (equalsStringIgnoreCase(command, "TYPE")) {
-			type(list);
+			commandType(list);
 			system("pause");
 		}
-		else if (equalsStringIgnoreCase(command, "CHECHTYPE")) {
-			//commandIdealTeam(&statsList, &playerList); /* chama a funcao IdealTeam depois de passar por algumas verificacoes, tal como ambas as listas, statsList e playersList terem jogadores e estatisticas */
+		else if (equalsStringIgnoreCase(command, "CHECKTYPE")) {
+			commandCheckType(list);
 			system("pause");
 		}
 		else if (equalsStringIgnoreCase(command, "KMEANS")) {

@@ -124,6 +124,7 @@
     <ClCompile Include="mapArrayList.c" />
     <ClCompile Include="mapElem.c" />
     <ClCompile Include="player.c" />
+    <ClCompile Include="playerType.c" />
     <ClCompile Include="statistics.c" />
   </ItemGroup>
   <ItemGroup>
@@ -135,6 +136,7 @@
     <ClInclude Include="map.h" />
     <ClInclude Include="mapElem.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="playerType.h" />
     <ClInclude Include="statistics.h" />
   </ItemGroup>
   <ItemGroup>

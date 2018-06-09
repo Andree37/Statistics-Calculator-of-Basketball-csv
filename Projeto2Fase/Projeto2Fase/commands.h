@@ -5,6 +5,7 @@
 
 #include "list.h"
 #include "player.h"
+#include "map.h"
 
 int equalsStringIgnoreCase(char str1[], char str2[]);
 void stringToUpper(char * str);
@@ -15,4 +16,6 @@ void commandClear(PtList list);
 void commandSort(PtList list);
 void commandAvg(PtList list);
 void commandNorm(PtList list);
+void commandType(PtList list);
+void commandCheckType(PtList list);
 

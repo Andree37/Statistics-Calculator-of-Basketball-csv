@@ -18,3 +18,4 @@ typedef Date* PtDate;
 /* definicao de prototipos de funcoes, definidas depois do commands.c */
 Date dateCreate(int day, int month, int year);
 int isYoungerThan(Date date1, Date date2);
+int isSameAge(Date date1, Date date2);

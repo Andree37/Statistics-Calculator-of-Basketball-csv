@@ -5,7 +5,7 @@ void mapKeyPrint(MapKey key) {
 }
 
 void mapValuePrint(MapValue value) {
-	
+	playerTypePrint(value);
 }
 
 /* funcao de comparacao de chaves */

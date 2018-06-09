@@ -45,6 +45,9 @@
     <ClCompile Include="averageMVPPlayer.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="playerType.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="list.h">
@@ -72,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="averageMVPPlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="playerType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
