@@ -78,7 +78,7 @@ int main(int argc, char** argv) {
 			system("pause");
 		}
 		else if (equalsStringIgnoreCase(command, "KMEANS")) {
-			//commandIdealTeam(&statsList, &playerList); /* chama a funcao IdealTeam depois de passar por algumas verificacoes, tal como ambas as listas, statsList e playersList terem jogadores e estatisticas */
+			cluster(list);
 			system("pause");
 		}
 		else {
