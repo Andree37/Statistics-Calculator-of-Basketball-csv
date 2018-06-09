@@ -23,5 +23,5 @@ PlayerType playerTypeCreate(char type[20], float avgTwoPoints, float allAvgTwoPo
 
 void playerTypePrint(PlayerType pType) {
 	printf("| %5.2f   |  %5.2f   |  %5.2f   |  %5.2f   |  %5.2f   |  %5.2f  |  %5.2f  |  %5.2f  |  %5.2f  |  %5.2f  |", pType.avgTwoPoints, pType.allAvgTwoPoints, pType.avgThreePoints, pType.allAvgThreePoints, 
-		pType.avgBlocks,pType.allAvgBlocks, pType.avgAssists, pType.allAvgAssists, pType.avgFouls, pType.allAvgFouls);
+		pType.avgFouls, pType.allAvgFouls, pType.avgAssists, pType.allAvgAssists, pType.avgBlocks, pType.allAvgBlocks);
 }
