@@ -752,7 +752,6 @@ void checkType(PtList list) {
 }
 
 
-
 void cluster(PtList list){
 
 	PtList norm = normalizeStatistics(list);
@@ -761,7 +760,7 @@ void cluster(PtList list){
 	int maxIteration;
 	float deltaError;
 	Cluster* clusters;
-
+	
 	
 
 
@@ -771,10 +770,12 @@ void cluster(PtList list){
 	scanf("%d", &maxIteration);
 	printf("Qual a varicao minima do erro entre iteracoes");
 	scanf("%f", &deltaError);
-
+	
 
 	clusters = kmeans(norm, k, maxIteration, deltaError);
 
+
+	
 }
 
 
