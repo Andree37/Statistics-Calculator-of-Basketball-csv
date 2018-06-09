@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <String.h>
+#include <Math.h>
 #include "averageMVPPlayer.h"
 #include "commands.h"
 #include "statistics.h"
+#include "cluster.h"
+
 
 void load(char *playerFile, char *statsFile, PtList list);
 void show(PtList list);
@@ -740,4 +743,100 @@ void checkType(PtList list) {
 	listDestroy(&shootingGuard);
 	listDestroy(&pointGuard);
 	mapDestroy(&map);
+}
+
+
+
+void cluster(PtList list){
+
+	PtList norm = normalizeStatistics(list);
+	char command[25];
+	int k;
+	int maxIteration;
+	float deltaError;
+	Cluster* clusters;
+
+	
+
+
+	printf("Quantos cluster quer usar?");
+	scanf("%d", &k);
+	printf("Quantas iteracoes quer efetuar");
+	scanf("%d", &maxIteration);
+	printf("Qual a varicao minima do erro entre iteracoes");
+	scanf("%f", &deltaError);
+
+
+	clusters = kmeans(norm, k, maxIteration, deltaError);
+
+}
+
+
+PtCluster kmeans(PtList list, int k, int maxIteration, float deltaError) {
+	//kmeans
+	Cluster *clusters = (Cluster*)malloc(k * sizeof(Cluster));
+	for (int i = 0; i < k; i++) {
+		clusters[i] = createCluster();
+	}
+
+	int iterationNumber = 1;
+	float prevError;
+	float iterationError;
+	//random para selecionar os stats para os clusters
+
+	do {
+		if (iterationNumber > 1)
+			prevError = iterationError;
+
+		//Atribuir 
+
+		//Reclacular os centroides
+
+		//Calcular o erro
+
+		iterationError++;
+	} while (iterationNumber <maxIteration && abs(prevError - iterationError)>deltaError);
+
+	return clusters;
+}
+
+void calculateClosestsClusters(PtList list, Cluster *clusters, int k) {
+	int sizeList;
+	int sizeCluster;
+	int distance;
+	int closestDistance;
+	int closestCluster;
+	//distance = (int*)malloc(k*sizeof(int));
+	//clusters[1];
+	Player player;
+	Statistics stat;
+	
+	
+	listSize(list, sizeList);
+	for (int i = 0; i < sizeList; i++) {
+		listGet(list, i, &player);
+		stat = player.statistics;
+		for (int j = 0; j < k; j++) {
+			distance =calculateDistance(clusters[j], stat);
+			if (distance < closestDistance) {
+				closestCluster = j;
+				closestDistance = distance;
+			}
+		}
+		listSize(clusters[closestCluster].members, &sizeCluster);
+		listAdd(clusters[closestCluster].members, sizeCluster, player);
+		
+	}
+
+}
+
+int calculateDistance(Cluster cluster, Statistics stat){
+	int ass = pow((cluster.meanAssists - stat.assists),2);
+	int two = pow((cluster.meanTwoPoints - stat.twoPoints),2);
+	int three = pow((cluster.meanThreePoints-stat.threePoints),2);
+	int fouls = pow((cluster.meanFouls-stat.fouls),2);
+	int blocks = pow((cluster.meanBlocks-stat.blocks),2);
+
+
+	return sqrt(ass+two+three+fouls+blocks);
 }
