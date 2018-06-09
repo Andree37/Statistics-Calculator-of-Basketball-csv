@@ -11,7 +11,8 @@ typedef struct cluster {
 	PtList members;
 }Cluster;
 
-typedef struct Cluster* PtCluster;
+typedef struct Cluster *PtCluster;
 
-PtCluster createCluster(float meanTwoPoints, float meanThreePoints, float meanAssists, float meanFouls, float meanBlocks);
+Cluster createCluster(Statistics stats);
+Cluster alterCluster(Cluster cluster, Statistics stats);
 	

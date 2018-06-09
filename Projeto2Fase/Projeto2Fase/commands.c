@@ -31,6 +31,12 @@ void segmentPlayers(PtList players, PtList allStar, PtList shootingGuard, PtList
 Statistics averageAllStats(PtList list);
 
 
+PtCluster kmeans(PtList list, int k, int maxIteration, float deltaError);
+void calculateClosestsClusters(PtList list, Cluster *clusters, int k);
+int calculateDistance(Cluster cluster, Statistics stat);
+void calculateCentroids(Cluster *clusters, int k);
+
+
 
 char** split(char *str, int nFields, const char *delim) {
 
@@ -775,23 +781,28 @@ void cluster(PtList list){
 PtCluster kmeans(PtList list, int k, int maxIteration, float deltaError) {
 	//kmeans
 	Cluster *clusters = (Cluster*)malloc(k * sizeof(Cluster));
+	Player p;
+	Statistics stat;
+
 	for (int i = 0; i < k; i++) {
-		clusters[i] = createCluster();
+		int rand;////buscar umas stats de um jogador random
+		listGet(list, rand ,&p);
+		stat = p.statistics;
+		clusters[i] = createCluster(stat);
 	}
 
 	int iterationNumber = 1;
 	float prevError;
 	float iterationError;
-	//random para selecionar os stats para os clusters
 
 	do {
 		if (iterationNumber > 1)
 			prevError = iterationError;
 
 		//Atribuir 
-
+		calculateClosestsClusters(list, &clusters,  k);
 		//Reclacular os centroides
-
+		calculateCentroids(clusters, k);
 		//Calcular o erro
 
 		iterationError++;
@@ -799,7 +810,6 @@ PtCluster kmeans(PtList list, int k, int maxIteration, float deltaError) {
 
 	return clusters;
 }
-
 void calculateClosestsClusters(PtList list, Cluster *clusters, int k) {
 	int sizeList;
 	int sizeCluster;
@@ -839,4 +849,13 @@ int calculateDistance(Cluster cluster, Statistics stat){
 
 
 	return sqrt(ass+two+three+fouls+blocks);
+}
+
+void calculateCentroids(Cluster *clusters, int k){ 
+	Statistics stat;
+	for (int i = 0; i < k; i++) {
+		averageAllStats(clusters[i].members, &stat);
+		clusters[i] = alterCluster(clusters[i],  stat);
+
+	}
 }
