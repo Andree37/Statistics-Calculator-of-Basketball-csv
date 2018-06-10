@@ -570,21 +570,25 @@ void commandType(PtList list) {
 
 /*Procedimento que verifica se podemos chamar o checktype e chama o*/
 void commandCheckType(PtList list) {
-	if (list != NULL) {
+	int size;
+	listSize(list, &size);
+	if (list != NULL && size != 0) {
 		checkType(list);
 	}
 	else {
-		printf("Erro interno, nao existe uma lista para suportar este comando");
+		printf("Nao existe registos na tabela\n");
 	}
 }
 
 /*Procedimento que verifica se podemos chamar o kmeans e chama o*/
 void commandKMeans(PtList list) {
-	if (list != NULL) {
+	int size;
+	listSize(list, &size);
+	if (list != NULL && size != 0) {
 		cluster(list);
 	}
 	else {
-		printf("Erro interno, nao existe uma lista para suportar este comando");
+		printf("Nao existe registos na tabela\n");
 	}
 }
 
@@ -688,7 +692,7 @@ void show(PtList list) {
 	listSize(list, &size);
 
 	if (size == 0) { //caso nao exista nenhum registo na lista, nao fazemos print
-		printf("Nao existe nenhum registo na tabela");
+		printf("Nao existe nenhum registo na tabela\n");
 		return;
 	}
 	printf("           Jogador   ID : NOME                | EQUIPA          | BIRTHDATE  |GENRE| 2POINTS |  3POINTS |  FOULS   | ASSISTS  |BLOCKS    | GAMES  |\n"); //cabecario
@@ -772,7 +776,7 @@ void sort(PtList list) {
 		if (changed) //caso exista uma troca, fazemos print da nova lista
 			show(clone);
 		else { //caso nao exista, uma mensagem de erro e mostrada
-			printf("Input invalido. Por favor insira Nome, Jogos ou Data.");
+			printf("Input invalido. Por favor insira Nome, Jogos ou Data.\n");
 		}
 	}
 	else {
@@ -814,9 +818,12 @@ void avg(PtList list) {
 		}
 
 		show(avgList);
-
-		listDestroy(&avgList); //libertacao de memoria
+		printf("\n");
 	}
+	else {
+		printf("Lista sem registos\n");
+	}
+	listDestroy(&avgList); //libertacao de memoria
 }
 
 /*Procedimento que mostra no ecra a lista normalizada*/
@@ -834,27 +841,33 @@ void norm(PtList list) {
 
 /*Procedimento que mostra no ecra as 3 listas (shooting guard, point guard e all star) sendo elas segmentadas*/
 void type(PtList list) {
+	int size;
+	listSize(list,&size);
+	if (size != 0) {
+		PtList avgList = averageStatistics(list); //passagem para a media
+		Statistics media = averageAllStats(avgList); //media geral
 
-	PtList avgList = averageStatistics(list); //passagem para a media
-	Statistics media = averageAllStats(avgList); //media geral
+		PtList allStar = listCreate(300); //criacao das listas com capacidade maxima
+		PtList shootingGuard = listCreate(300);
+		PtList pointGuard = listCreate(300);
 
-	PtList allStar = listCreate(300); //criacao das listas com capacidade maxima
-	PtList shootingGuard = listCreate(300);
-	PtList pointGuard = listCreate(300);
+		segmentPlayers(avgList, allStar, shootingGuard, pointGuard, media); //segmentacao dos jogadores nas varias listas segundo a media geral
 
-	segmentPlayers(avgList, allStar, shootingGuard, pointGuard, media); //segmentacao dos jogadores nas varias listas segundo a media geral
+		printf("Tipo Shooting-Guard\n");
+		show(shootingGuard);
+		printf("Tipo Point-Guard\n");
+		show(pointGuard);
+		printf("Tipo All-Star\n");
+		show(allStar);
 
-	printf("Tipo Shooting-Guard\n");
-	listPrint(shootingGuard);
-	printf("Tipo Point-Guard\n");
-	listPrint(pointGuard);
-	printf("Tipo All-Star\n");
-	listPrint(allStar);
-
-	listDestroy(&avgList); //libertacao de memoria
-	listDestroy(&allStar);
-	listDestroy(&shootingGuard);
-	listDestroy(&pointGuard);
+		listDestroy(&avgList); //libertacao de memoria
+		listDestroy(&allStar);
+		listDestroy(&shootingGuard);
+		listDestroy(&pointGuard);
+	}
+	else {
+		printf("Lista sem registos\n");
+	}
 }
 
 /*Procedimento que mostra no ecra o tipo e as estatisticas do jogador segundo o que o utilizador escrever*/
@@ -876,7 +889,7 @@ void checkType(PtList list) {
 	addListToMap(map, pointGuard, "point-guard", media);
 
 	int intTemp;
-	char toInteger[5];
+	char toInteger[10];
 	MapValue value;
 	int size;
 	mapSize(map, &size);
@@ -924,13 +937,13 @@ void cluster(PtList list){
 	
 
 
-	printf("Quantos cluster quer usar?");
+	printf("Quantos cluster quer usar? ");
 	gets_s(command, sizeof(command));
 	k = atoi(command);
-	printf("Quantas iteracoes quer efetuar");
+	printf("Quantas iteracoes quer efetuar ");
 	gets_s(command, sizeof(command));
 	maxIteration = atoi(command);
-	printf("Qual a varicao minima do erro entre iteracoes");
+	printf("Qual a varicao minima do erro entre iteracoes ");
 	gets_s(command, sizeof(command));
 	deltaError = atoi(command);
 	
