@@ -115,7 +115,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="averageMVPPlayer.c" />
     <ClCompile Include="cluster.c" />
     <ClCompile Include="commands.c" />
     <ClCompile Include="date.c" />
@@ -129,7 +128,6 @@
     <ClCompile Include="statistics.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="averageMVPPlayer.h" />
     <ClInclude Include="cluster.h" />
     <ClInclude Include="commands.h" />
     <ClInclude Include="date.h" />

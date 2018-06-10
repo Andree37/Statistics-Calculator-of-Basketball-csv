@@ -16,6 +16,8 @@ typedef struct statistics {
 	float fouls;		/*total ou media de faltas*/
 	float blocks;		/* total ou media de blocos */
 	int gamesPlayed;	/*total de jogos disputados*/
+	
+	float mvp;			/*mvp de cada jogador, nao sendo calculado, comeca a 0*/
 
 }Statistics;
 

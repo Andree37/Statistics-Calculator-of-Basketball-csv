@@ -20,6 +20,7 @@ Statistics statisticsCreate(float two, float three, float assists, float fouls, 
 	stats.fouls = fouls;
 	stats.blocks = blocks;
 	stats.gamesPlayed = 0;
+	stats.mvp = 0;
 
 	return stats;
 }

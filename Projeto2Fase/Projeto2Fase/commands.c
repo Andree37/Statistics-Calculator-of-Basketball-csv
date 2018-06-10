@@ -11,7 +11,6 @@
 #include <stdlib.h>
 #include <String.h>
 #include <Math.h>
-#include "averageMVPPlayer.h"
 #include "commands.h"
 #include "statistics.h"
 #include "cluster.h"
@@ -773,40 +772,32 @@ void avg(PtList list) {
 	int size;
 	listSize(avgList, &size);
 
-	PtMVPPlayerlist avgMVPList = mvpPlayerListCreate(size); //criacao de uma lista capaz de guardar o jogador e o mvp
-	AvgMVPPlayer playerAVG;
+	ListElem elem1;
+	ListElem elem2;
 
 	if (size > 0) {
 		for (int i = 0; i < size; i++) {
 			listGet(avgList, i, &player);
 			avgStats = player.statistics;
 			avgMVP = 3 * avgStats.threePoints + 2 * avgStats.twoPoints + avgStats.assists + 2 * avgStats.blocks - (3 * avgStats.fouls); //calculo do mvp
-			playerAVG = avgMVPPlayerCreate(player, avgMVP); //criacao de uma estrutura capaz de guardar o jogador e o seu mvp
-			mvpPLayerListAdd(avgMVPList, playerAVG); //adicao na lista, esta estrutura
+			player.statistics.mvp = avgMVP;
+			listSet(avgList, i, player, &elem1);
 		}
 
 		for (int i = 0; i < size - 1; i++) {
 			for (int j = 0; j < size - i - 1; j++) { //ordenacao da lista
-				if (avgMVPList->elements[j].avgMVP < avgMVPList->elements[j + 1].avgMVP) {
-					AvgMVPPlayer aux = avgMVPList->elements[j];
-					avgMVPList->elements[j] = avgMVPList->elements[j + 1];
-					avgMVPList->elements[j + 1] = aux;
+				listGet(avgList, j, &elem1);
+				listGet(avgList, j + 1, &elem2);
+				if (elem1.statistics.mvp < elem2.statistics.mvp) {
+					listSet(avgList, j + 1, elem1, &elem2);
+					listSet(avgList, j, elem2, &elem1);
 				}
 			}
 		}
 
-		PtList clone = listCreate(size);
-		ListElem elem;
+		show(avgList);
 
-		for (int i = 0; i < size; i++) { //passagem da lista capaz de guardar o mvp para uma lista de jogadores normal
-			elem = avgMVPList->elements[i].player;
-			listAdd(clone, i, elem);
-		}
-
-		show(clone);
-
-		listDestroy(&clone); //libertacao de memoria
-		mvpPlayerListDestroy(&avgMVPList);
+		listDestroy(&avgList); //libertacao de memoria
 	}
 }
 
