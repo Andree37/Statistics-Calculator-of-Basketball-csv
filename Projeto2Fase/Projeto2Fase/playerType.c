@@ -33,6 +33,6 @@ PlayerType playerTypeCreate(char type[20], float avgTwoPoints, float allAvgTwoPo
 
 /*Procedimento que mostra na consola os valores dos playerType*/
 void playerTypePrint(PlayerType pType) {
-	printf("| %5.2f   |  %5.2f   |  %5.2f   |  %5.2f   |  %5.2f   |  %5.2f  |  %5.2f  |  %5.2f  |  %5.2f  |  %5.2f  |", pType.avgTwoPoints, pType.allAvgTwoPoints, pType.avgThreePoints, pType.allAvgThreePoints, 
+	printf("%-15s| %5.2f   |  %5.2f   |  %5.2f   |  %5.2f   |  %5.2f   |  %5.2f  |  %5.2f  |  %5.2f  |  %5.2f  |  %5.2f  |",pType.type, pType.avgTwoPoints, pType.allAvgTwoPoints, pType.avgThreePoints, pType.allAvgThreePoints, 
 		pType.avgFouls, pType.allAvgFouls, pType.avgAssists, pType.allAvgAssists, pType.avgBlocks, pType.allAvgBlocks);
 }
