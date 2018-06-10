@@ -1,4 +1,4 @@
-/* MINI-PROJETO 1 ATAD 2018
+/* MINI-PROJETO 2 ATAD 2018
 * Identificacao dos Alunos:
 *
 *      Numero: 170221006 | Nome: André dos Santos Martins Ribeiro
@@ -15,7 +15,7 @@ typedef struct date {
 /* tipo definido para ponteiro de data */
 typedef Date* PtDate;
 
-/* definicao de prototipos de funcoes, definidas depois do commands.c */
+/* definicao de prototipos de funcoes */
 Date dateCreate(int day, int month, int year);
 int isYoungerThan(Date date1, Date date2);
 int isSameAge(Date date1, Date date2);

@@ -1,15 +1,16 @@
-/* MINI-PROJETO 1 ATAD 2018
+/* MINI-PROJETO 2 ATAD 2018
 * Identificacao dos Alunos:
 *
 *      Numero: 170221006 | Nome: André dos Santos Martins Ribeiro
 *      Numero: 170221026 | Nome: Daniel Alexandre Lopes Alves
 *
 */
+
+/*Bibliotecas importadas*/
 #include "date.h"
 
-/* Esta estrutura e responsavel por criar uma data que sera utilizada na data de nascimento na estrutura jogador */
-
-Date dateCreate(int day, int month, int year) /* funcao 'construtora' da estrutura de dados Date, retorna uma nova data */
+/*Funcao que devolve uma nova data*/
+Date dateCreate(int day, int month, int year) 
 {
 	Date newDate;
 	if (day < 0 || day > 31) {
@@ -27,6 +28,7 @@ Date dateCreate(int day, int month, int year) /* funcao 'construtora' da estrutu
 	return newDate;
 }
 
+/*Funcao que retorna true(1) se for mais novo, false(0) se nao for*/
 int isYoungerThan(Date date1, Date date2) {
 	if (date1.year > date2.year) {
 		return 1;
@@ -45,6 +47,7 @@ int isYoungerThan(Date date1, Date date2) {
 	return 0;
 }
 
+/*Funcao que retorna true(1) se for da mesma idade, false(0) se nao for*/
 int isSameAge(Date date1, Date date2) {
 	if (date1.year == date2.year && date1.month == date2.month && date1.day == date2.day) return 1;
 	return 0;

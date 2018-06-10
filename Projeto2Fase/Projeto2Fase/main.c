@@ -6,13 +6,12 @@
 *
 */
 
+/*Bibliotecas importadas*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "commands.h"
 #include "statistics.h"
-
-//#include "commands.h"
 
 /* definicao de prototipos de funcoes, definidas depois do main() */
 void printCommandsMenu();
@@ -78,7 +77,7 @@ int main(int argc, char** argv) {
 			system("pause");
 		}
 		else if (equalsStringIgnoreCase(command, "KMEANS")) {
-			cluster(list);
+			commandKMeans(list);
 			system("pause");
 		}
 		else {
@@ -96,14 +95,12 @@ int main(int argc, char** argv) {
 	return (EXIT_SUCCESS);
 }
 
-
-//FALTA UPDATE
+/*Procedimento que quando e envocado, mostra para a consola algumas opcoes para o utilizador escolher*/
 void printCommandsMenu() { /* Menu do utilizador */
 	printf("\n===================================================================================");
 	printf("\n                          MINI-PROJECT: Basket Scores                              ");
 	printf("\n===================================================================================");
-	printf("\nA. Info (LOAD, SHOW, CLEAR, SEARCH).");
-	//printf("\nB. Specific info about players' performance during the games (LOADG, SEARCHG, MVP).");
+	printf("\nA. Info (LOAD, SHOW, CLEAR).");
 	printf("\nC. Aggregated info about games and players (SORT, AVG, NORM, TYPE).");
 	printf("\nD. Advanced indicator (KMEANS, CHECKTYPE)");
 	printf("\nE. Exit (QUIT)\n\n");

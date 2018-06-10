@@ -1,11 +1,11 @@
 #include "mapElem.h"
 
 void mapKeyPrint(MapKey key) {
-	printf("%d \n", key);
+	printf("%d \n", key); //a key e um int por isso podemos fazer print assim
 }
 
 void mapValuePrint(MapValue value) {
-	playerTypePrint(value);
+	playerTypePrint(value); //procedimento encarregue de fazer print do valor, sendo ele um PlayerType
 }
 
 /* funcao de comparacao de chaves */

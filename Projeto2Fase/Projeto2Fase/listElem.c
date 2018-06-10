@@ -2,5 +2,5 @@
 #include <stdio.h>
 
 void listElemPrint(ListElem elem) {
-	playerPrint(elem);
+	playerPrint(elem); // este procedimento e encarregue de fazer print do elemento, sendo ele um player
 }

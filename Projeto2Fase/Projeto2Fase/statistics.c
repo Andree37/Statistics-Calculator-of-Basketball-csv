@@ -1,8 +1,16 @@
-#include <stdlib.h>
+/* MINI-PROJETO 2 ATAD 2018
+* Identificacao dos Alunos:
+*
+*      Numero: 170221006 | Nome: André dos Santos Martins Ribeiro
+*      Numero: 170221026 | Nome: Daniel Alexandre Lopes Alves
+*
+*/
 
+/*Bibliotecas importadas*/
+#include <stdlib.h>
 #include "statistics.h"
 
-
+/*Funcao que devolve uma nova estatistica criada com os jogos a 0*/
 Statistics statisticsCreate(float two, float three, float assists, float fouls, float blocks)
 {
 	Statistics stats;
@@ -16,7 +24,7 @@ Statistics statisticsCreate(float two, float three, float assists, float fouls, 
 	return stats;
 }
 
-//Cria uma estatisticas com tudo a zeros
+/*Funcao que devolve uma estatistica criada com tudo a 0*/
 Statistics statisticsCreateZeros()
 {
 	Statistics stats = statisticsCreate(0,0,0,0,0);
@@ -24,6 +32,7 @@ Statistics statisticsCreateZeros()
 	return stats;
 }
 
+/*Funcao que devolve uma estatistica com a soma entre a estatistica doadora e a que recebe*/
 Statistics statisticsAdd(Statistics reciever, Statistics giver, int games)
 {
 	if (games != 0) {
@@ -41,31 +50,7 @@ Statistics statisticsAdd(Statistics reciever, Statistics giver, int games)
 		return reciever;
 }
 
-PtStatisticsList statisticsListCreate(unsigned int capacity) /* funcao 'construtora' da estrutura de dados statisticsList, retorna uma estrutura de dados para guardar estatisticas de jogos */
-{
-	PtStatisticsList list = (PtStatisticsList)malloc(sizeof(StatisticsList));
-	list->capacity = capacity;
-	list->size = 0;
-	list->elements = (Statistics*)calloc(capacity, sizeof(Statistics));
-	return list;
-}
-
-void statisticsListAdd(PtStatistics stats, PtStatisticsList list) /* procedimento para adicionar uma nova estatistica de jogos a lista */
-{
-	if (list->size == list->capacity) {
-		list->capacity *= 2;
-		list->elements = (Statistics*)realloc(list->elements, list->capacity * sizeof(Statistics));
-	}
-	list->elements[list->size++] = *stats;
-}
-
-void statisticsListDestroy(PtStatisticsList list) /* procedimento que liberta o array e coloca o resto dos atributos num valor nulo */
-{
-	list->capacity = 0;
-	list->size = 0;
-	free(list->elements);
-}
-
+/*Procedimento que mostra na consola as estatisticas*/
 void statisticsPrint(Statistics stats) {
 	printf("| %5.2f   |  %5.2f   |  %5.2f   |  %5.2f   |  %5.2f   |  %4d  |", stats.twoPoints, stats.threePoints, stats.fouls, stats.assists, stats.blocks, stats.gamesPlayed);
 }

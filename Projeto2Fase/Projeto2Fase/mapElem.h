@@ -4,7 +4,7 @@
 /* definicao do tipo da chave */
 typedef int MapKey;
 /* definicao do tipo do valor*/
-typedef PlayerType MapValue;
+typedef PlayerType MapValue; // O value, neste projeto, foi definido como um PlayerType
 
 void mapKeyPrint(MapKey key);
 void mapValuePrint(MapValue value);
