@@ -39,6 +39,7 @@ Statistics statNormalizationCalculation(Statistics stat, float* twoMa, float* th
 PtList normalizeStatistics(PtList players);
 void segmentPlayers(PtList players, PtList allStar, PtList shootingGuard, PtList pointGuard, Statistics media);
 Statistics averageAllStats(PtList list);
+void addListToMap(PtMap map, PtList list, char type[20], Statistics media);
 
 
 PtClusterList kmeans(PtList list, int k, int maxIteration, float deltaError, float *iterationError);
@@ -338,6 +339,23 @@ void segmentPlayers(PtList players, PtList allStar, PtList shootingGuard, PtList
 			listSize(pointGuard, &innerSize);
 			listAdd(pointGuard, innerSize, elem);
 		}
+	}
+}
+
+/*Procedimento que poe no mapa os jogadores da lista com o tipo enviado por parametro*/
+void addListToMap(PtMap map, PtList list, char type[20], Statistics media) {
+	
+	PlayerType pType;
+	ListElem lElem;
+
+	int size;
+	listSize(list, &size);
+	
+	for (int i = 0; i < size; i++) { //adicao no mapa da lista recebida por parametro
+		listGet(list, i, &lElem);
+		pType = playerTypeCreate(type, lElem.statistics.twoPoints, media.twoPoints, lElem.statistics.threePoints, media.threePoints,
+			lElem.statistics.blocks, media.blocks, lElem.statistics.assists, media.assists, lElem.statistics.fouls, media.fouls);
+		mapPut(map, lElem.id, pType);
 	}
 }
 
@@ -852,41 +870,15 @@ void checkType(PtList list) {
 	segmentPlayers(avgList, allStar, shootingGuard, pointGuard, media); //segmentacao dos jogadores
 
 	PtMap map = mapCreate(300); // craiacao do mapa com o maximo de jogadores
-	PlayerType pType;
 
-	ListElem lElem;
-
-	int size;
-	listSize(allStar, &size);
-	
-	for (int i = 0; i < size; i++) { //adicao no mapa dos all star com a string "all-star"
-		listGet(allStar, i, &lElem);
-		pType = playerTypeCreate("all-star", lElem.statistics.twoPoints, media.twoPoints, lElem.statistics.threePoints, media.threePoints,
-			lElem.statistics.blocks, media.blocks, lElem.statistics.assists, media.assists, lElem.statistics.fouls, media.fouls);
-		mapPut(map, lElem.id, pType);
-	}
-
-	listSize(shootingGuard, &size);
-
-	for (int i = 0; i < size; i++) { //adicao no mapa dos shooting guard com a string "shooting-guard"
-		listGet(shootingGuard, i, &lElem);
-		pType = playerTypeCreate("shooting-guard", lElem.statistics.twoPoints, media.twoPoints, lElem.statistics.threePoints, media.threePoints,
-			lElem.statistics.blocks, media.blocks, lElem.statistics.assists, media.assists, lElem.statistics.fouls, media.fouls);
-		mapPut(map, lElem.id, pType);
-	}
-
-	listSize(pointGuard, &size);
-
-	for (int i = 0; i < size; i++) { //adicao no mapa dos point guard com a string "point-guard"
-		listGet(pointGuard, i, &lElem);
-		pType = playerTypeCreate("point-guard", lElem.statistics.twoPoints, media.twoPoints, lElem.statistics.threePoints, media.threePoints,
-			lElem.statistics.blocks, media.blocks, lElem.statistics.assists, media.assists, lElem.statistics.fouls, media.fouls);
-		mapPut(map, lElem.id, pType);
-	}
+	addListToMap(map, allStar, "all-star", media);
+	addListToMap(map, shootingGuard, "shooting-guard", media);
+	addListToMap(map, pointGuard, "point-guard", media);
 
 	int intTemp;
 	char toInteger[5];
 	MapValue value;
+	int size;
 	mapSize(map, &size);
 	do { //enquanto o utilizador nao escrever um numero negativo, estamos neste loop
 		printf("Introduza uma chave(ID de jogador) para saber informacoes sobre ele ------ Introduza um valor negativo para sair\n");
